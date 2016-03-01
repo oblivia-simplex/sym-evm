@@ -1,0 +1,3 @@
+[submodule "doc/yellowpaper"]
+	path = doc/yellowpaper
+	url = git@github.com:ethereum/yellowpaper.git
