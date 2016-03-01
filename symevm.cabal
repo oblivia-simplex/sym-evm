@@ -5,7 +5,7 @@ name:                symevm
 version:             0.1.0.0
 synopsis:            Symbolic Execution of Ethereum Virtual Machine (EVM)
 -- description:         
-homepage:            https://github.com/plum-umd/symevm
+homepage:            https://github.com/plum-umd/symbolic-ether
 license:             GPL-3
 license-file:        LICENSE
 author:              Ian Sweet
