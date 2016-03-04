@@ -1,3 +1,6 @@
 [submodule "doc/yellowpaper"]
 	path = doc/yellowpaper
 	url = git@github.com:ethereum/yellowpaper.git
+[submodule "doc/symstack"]
+	path = doc/symstack
+	url = git@github.com:Isweet/symstack.git
