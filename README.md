@@ -5,7 +5,7 @@ you can visit the [yellow paper](http://gavwood.com/paper.pdf) which is also mir
 of which there are [m](https://github.com/ethereum/go-ethereum)[a](https://github.com/ethereum/cpp-ethereum)[n](https://github.com/ethereum/pyethereum)[y](https://github.com/ethcore/parity), implement the Ethereum Virtual Machine (EVM). They run code hosted on the blockchain (called "contracts"), at the request of
 users on the network, and then publish a block which reflects the state change induced by the code.
 
-This project implements a stripped-down Ethereum client, which implements the EVM symbolically. The application is not connected to the Ethereum network.
+This project provides a stripped-down Ethereum client, which implements the EVM symbolically. The application is not connected to the Ethereum network.
 Instead, the user can take a [snapshot of the blockchain](https://github.com/ethereum/wiki/wiki/Blockchain-import-and-export-instructions) and seed this
 client using that snapshot. The user then provides a transaction(s) as input. The client will simulate mining those transactions into a block, and report
 any errors it discovers along the way.
