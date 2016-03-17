@@ -1,8 +1,10 @@
-module SymEVM.Prelude.ByteArray (B20, toB20, fromB20, B0, mkB0) where
+module SymEVM.Prelude.ByteArray (ByteArray, B20, toB20, fromB20, B0, mkB0) where
 
 import Prelude hiding (length)
 
 import Data.ByteString
+
+type ByteArray = ByteString
 
 newtype B20 = B20 { fromB20 :: ByteString } deriving ( Show, Eq, Ord )
 

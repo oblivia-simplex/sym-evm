@@ -24,7 +24,7 @@ header = do
     prg <- getProgName
     return $ "Usage: " ++ prg ++ " [OPTIONS...]"
 
-data Options = Options { }
+data Options = Options { } deriving ( Show )
 
 defaultOptions :: Options
 defaultOptions = Options { }
