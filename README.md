@@ -23,14 +23,14 @@ I develop on a mac, and these are both available as packages via Homebrew. I wou
 
 ### Build
 
-__WARNING__: You'll notice that there are these 'cabal sandbox' commands in the Makefile. These ensure that you don't enter dependency
+__WARNING__: You'll notice that there are these 'cabal sandbox' commands in the build script. These ensure that you don't enter dependency
 hell induced by cabal. I pity the fool who issues 'cabal install' without a [sandbox](https://www.haskell.org/cabal/users-guide/installing-packages.html#developing-with-sandboxes). If you do so, may [Davy Jones](https://www.youtube.com/watch?v=zo-OYwh6KHA) have mercy on your soul.
 
-    % make
+    % ./build.sh
 
 ### Run
 
-    % make run
+    % ./example.sh
 
 or
 
