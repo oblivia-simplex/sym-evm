@@ -6,7 +6,7 @@ import Serialize.JSON.Transaction
 import SymEVM.Data.Transaction
 
 import Prelude hiding (readFile)
-import Data.ByteString.Lazy.Char8
+import Data.ByteString.Lazy.Char8 hiding (putStrLn)
 import Data.Aeson
 
 main :: IO ()
@@ -14,4 +14,6 @@ main = do
     (options, args) <- parseCL
     print options
     res <- readFile (args !! 0) >>= return . eitherDecode
-    print (res :: Either String TransactionData)
+    case (res :: Either String TransactionData) of
+        Left err -> putStrLn err
+        Right val -> print val
