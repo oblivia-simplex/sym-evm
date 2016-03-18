@@ -34,5 +34,5 @@ hell induced by cabal. I pity the fool who issues 'cabal install' without a [san
 
 or
 
-    % ./dist/build/symevm/symevm
+    % ./dist/build/SymEVM/symevm
 
