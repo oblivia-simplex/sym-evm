@@ -1,11 +1,51 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Serialize.JSON.Transaction (TransactionData) where
+module Serialize.JSON.Transaction (deserialize) where
 
-import SymEVM.Prelude
 import Data.Maybe
+
 import Data.Aeson
 import Data.Aeson.Types
+import Data.ByteString.Lazy
+
+import SymEVM.Prelude
+import qualified SymEVM.Data.Transaction as T
+
+deserialize :: ByteString -> Error T.Transaction
+deserialize bs =
+    case bs' of
+        Left err  -> Left err
+        Right val -> Right $ convert val
+    where
+        bs' = eitherDecode bs :: Either String TransactionData
+
+
+{- TODO:
+ -   + nonce; comes from world state
+ -   + ecSign, ecR, ecS; comes from signing raw transaction
+ -
+ - Need to create a monad for configuration (will provide elliptic curve
+ - private key from user, and flags) and a monad for world state (will provide
+ - lookup for nonce).
+ -
+ - Should also validate the 'from' field against the private keys in config monad,
+ - and then use it to lookup nonce.
+ -}
+convert :: TransactionData -> T.Transaction
+convert td =
+    T.Transaction { T.nonce    = fromRight $ toP256 1
+                  , T.gasPrice = (gasPrice td)
+                  , T.gasLimit = (gas td)
+                  , T.to       = (to td)
+                  , T.value    = (value td)
+                  , T.payload  = (payload td)
+                  , T.ecSign   = fromRight $ toP5   1
+                  , T.ecR      = fromRight $ toP256 1
+                  , T.ecS      = fromRight $ toP256 1
+                  }
+    where
+        fromRight (Right v) = v
+        fromRight (Left err) = error err
 
 data TransactionData = TransactionData
     { from :: B20
@@ -14,7 +54,7 @@ data TransactionData = TransactionData
     , gasPrice :: P256
     , value :: P256
     , payload :: B
-    } deriving ((Show))
+    } deriving ( Show )
 
 -- TODO: Make defaults sensible
 strDefaultGas :: String

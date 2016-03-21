@@ -1,19 +1,18 @@
 module Main (main) where
 
-import UI.CL
-import Serialize.JSON.Transaction
-
-import SymEVM.Data.Transaction
-
-import Prelude hiding (readFile)
-import Data.ByteString.Lazy.Char8 hiding (putStrLn)
+import qualified Data.ByteString.Lazy.Char8 as L
 import Data.Aeson
+
+import SymEVM.Prelude
+import UI.CL
+import SymEVM.Data.Transaction
+import Serialize.JSON.Transaction
 
 main :: IO ()
 main = do
     (options, args) <- parseCL
     print options
-    res <- readFile (args !! 0) >>= return . eitherDecode
-    case (res :: Either String TransactionData) of
+    res <- L.readFile (args !! 0) >>= return . deserialize
+    case (res :: Error Transaction) of
         Left err -> putStrLn err
         Right val -> print val
