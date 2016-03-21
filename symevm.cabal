@@ -26,8 +26,15 @@ executable symevm
 
 library
   exposed-modules:     SymEVM.Data.Transaction, SymEVM.Prelude
-  other-modules:       SymEVM.Prelude.Scalar,
-                       SymEVM.Prelude.ByteArray
-  build-depends:       base >= 4.8 && < 4.9, bytestring
+  other-modules:       SymEVM.Prelude.Error
+                       SymEVM.Prelude.P,
+                       SymEVM.Prelude.P.P,
+                       SymEVM.Prelude.P.P256,
+                       SymEVM.Prelude.P.P5,
+                       SymEVM.Prelude.B,
+                       SymEVM.Prelude.B.B,
+                       SymEVM.Prelude.B.B20,
+                       SymEVM.Prelude.B.B0
+  build-depends:       base >= 4.8 && < 4.9, bytestring, mtl, split
   hs-source-dirs:      lib
   default-language:    Haskell2010

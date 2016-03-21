@@ -1,6 +1,7 @@
 module SymEVM.Prelude
-       (module SymEVM.Prelude.Scalar, module SymEVM.Prelude.ByteArray)
-       where
+    ( module SymEVM.Prelude.P
+    , module SymEVM.Prelude.B
+    ) where
 
-import SymEVM.Prelude.Scalar
-import SymEVM.Prelude.ByteArray
+import SymEVM.Prelude.P
+import SymEVM.Prelude.B

@@ -2,16 +2,14 @@ module SymEVM.Data.Transaction (Transaction(..)) where
 
 import SymEVM.Prelude
 
-import Data.ByteString
-
 data Transaction = Transaction
-    { nonce :: S256
-    , gasPrice :: S256
-    , gasLimit :: S256
+    { nonce :: P256
+    , gasPrice :: P256
+    , gasLimit :: P256
     , to :: Either B20 B0
-    , value :: S256
-    , payload :: ByteString
-    , ecSign :: S5
-    , ecR :: S256
-    , ecS :: S256
+    , value :: P256
+    , payload :: B
+    , ecSign :: P5
+    , ecR :: P256
+    , ecS :: P256
     } deriving ( Show, Eq, Ord )

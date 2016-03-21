@@ -3,7 +3,6 @@
 module Serialize.JSON.Transaction (TransactionData) where
 
 import SymEVM.Prelude
-import Data.ByteString
 import Data.Maybe
 import Data.Aeson
 import Data.Aeson.Types
@@ -11,10 +10,10 @@ import Data.Aeson.Types
 data TransactionData = TransactionData
     { from :: B20
     , to :: Either B0 B20
-    , gas :: S256
-    , gasPrice :: S256
-    , value :: S256
-    , payload :: ByteString
+    , gas :: P256
+    , gasPrice :: P256
+    , value :: P256
+    , payload :: B
     } deriving ((Show))
 
 -- TODO: Make defaults sensible
@@ -46,17 +45,17 @@ strToTo s =
         Nothing -> return $ Left mkB0
         Just s' -> strParse strToB20 "to" s' >>= return . Right
 
-strToGas :: String -> Parser S256
-strToGas = strParse strToS256 "gas"
+strToGas :: String -> Parser P256
+strToGas = strParse strToP256 "gas"
 
-strToGasPrice :: String -> Parser S256
-strToGasPrice = strParse strToS256 "gasPrice"
+strToGasPrice :: String -> Parser P256
+strToGasPrice = strParse strToP256 "gasPrice"
 
-strToValue :: String -> Parser S256
-strToValue = strParse strToS256 "value"
+strToValue :: String -> Parser P256
+strToValue = strParse strToP256 "value"
 
-strToPayload :: String -> Parser ByteString
-strToPayload = strParse strToByteString "payload"
+strToPayload :: String -> Parser B
+strToPayload = strParse strToB "payload"
 
 instance FromJSON TransactionData where
     parseJSON (Object v) = do
