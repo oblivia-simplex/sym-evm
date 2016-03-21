@@ -35,6 +35,6 @@ library
                        SymEVM.Prelude.B.B,
                        SymEVM.Prelude.B.B20,
                        SymEVM.Prelude.B.B0
-  build-depends:       base >= 4.8 && < 4.9, bytestring, mtl, split
+  build-depends:       base >= 4.8 && < 4.9, bytestring, mtl, split, base64-bytestring, cryptohash
   hs-source-dirs:      lib
   default-language:    Haskell2010

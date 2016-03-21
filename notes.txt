@@ -1,0 +1,458 @@
+[ins@hamilton symevm]$ ghci
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+Prelude> import Data.ByteString.Base64
+
+<no location info>:
+    Could not find module ‚ÄòData.ByteString.Base64‚Äô
+    Perhaps you meant
+      Data.ByteString.Lazy (from bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6)
+      Data.ByteString.Unsafe (from bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6)
+      Data.ByteString.Builder (from bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6)
+Prelude> import Data.ByteString.Base64
+
+<no location info>:
+    Could not find module ‚ÄòData.ByteString.Base64‚Äô
+    Perhaps you meant
+      Data.ByteString.Lazy (from bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6)
+      Data.ByteString.Unsafe (from bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6)
+      Data.ByteString.Builder (from bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6)
+Prelude> :q
+Leaving GHCi.
+[ins@hamilton symevm]$ ghci
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+Prelude> import Data.ByteString.Base64
+
+<no location info>:
+    Could not find module ‚ÄòData.ByteString.Base64‚Äô
+    Perhaps you meant
+      Data.ByteString.Lazy (from bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6)
+      Data.ByteString.Unsafe (from bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6)
+      Data.ByteString.Builder (from bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6)
+Prelude> :q
+Leaving GHCi.
+[ins@hamilton symevm]$ cabal repl
+Preprocessing library symevm-0.1.0.0...
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+[ 1 of 11] Compiling SymEVM.Prelude.B.B0 ( lib/SymEVM/Prelude/B/B0.hs, interpreted )
+[ 2 of 11] Compiling SymEVM.Prelude.Error ( lib/SymEVM/Prelude/Error.hs, interpreted )
+[ 3 of 11] Compiling SymEVM.Prelude.P.P ( lib/SymEVM/Prelude/P/P.hs, interpreted )
+[ 4 of 11] Compiling SymEVM.Prelude.P.P256 ( lib/SymEVM/Prelude/P/P256.hs, interpreted )
+[ 5 of 11] Compiling SymEVM.Prelude.P.P5 ( lib/SymEVM/Prelude/P/P5.hs, interpreted )
+[ 6 of 11] Compiling SymEVM.Prelude.P ( lib/SymEVM/Prelude/P.hs, interpreted )
+[ 7 of 11] Compiling SymEVM.Prelude.B.B ( lib/SymEVM/Prelude/B/B.hs, interpreted )
+[ 8 of 11] Compiling SymEVM.Prelude.B.B20 ( lib/SymEVM/Prelude/B/B20.hs, interpreted )
+[ 9 of 11] Compiling SymEVM.Prelude.B ( lib/SymEVM/Prelude/B.hs, interpreted )
+[10 of 11] Compiling SymEVM.Prelude   ( lib/SymEVM/Prelude.hs, interpreted )
+[11 of 11] Compiling SymEVM.Data.Transaction ( lib/SymEVM/Data/Transaction.hs, interpreted )
+Ok, modules loaded: SymEVM.Data.Transaction, SymEVM.Prelude, SymEVM.Prelude.Error, SymEVM.Prelude.P, SymEVM.Prelude.B, SymEVM.Prelude.P.P, SymEVM.Prelude.P.P256, SymEVM.Prelude.P.P5, SymEVM.Prelude.B.B, SymEVM.Prelude.B.B20, SymEVM.Prelude.B.B0.
+*SymEVM.Data.Transaction> import Data.ByteString.Base64
+
+<no location info>:
+    Could not find module ‚ÄòData.ByteString.Base64‚Äô
+    It is a member of the hidden package ‚Äòbase64-bytestring-1.0.0.1@base6_AkCk8zInckjJsyQ4AIFHPN‚Äô.
+    Perhaps you need to add ‚Äòbase64-bytestring‚Äô to the build-depends in your .cabal file.
+*SymEVM.Data.Transaction> :q
+Leaving GHCi.
+[ins@hamilton symevm]$ cabal repl
+./symevm.cabal has been changed. Re-configuring with most recently used
+options. If this fails, please run configure manually.
+Resolving dependencies...
+Configuring symevm-0.1.0.0...
+Preprocessing library symevm-0.1.0.0...
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+[ 1 of 11] Compiling SymEVM.Prelude.B.B0 ( lib/SymEVM/Prelude/B/B0.hs, interpreted )
+[ 2 of 11] Compiling SymEVM.Prelude.Error ( lib/SymEVM/Prelude/Error.hs, interpreted )
+[ 3 of 11] Compiling SymEVM.Prelude.P.P ( lib/SymEVM/Prelude/P/P.hs, interpreted )
+[ 4 of 11] Compiling SymEVM.Prelude.P.P256 ( lib/SymEVM/Prelude/P/P256.hs, interpreted )
+[ 5 of 11] Compiling SymEVM.Prelude.P.P5 ( lib/SymEVM/Prelude/P/P5.hs, interpreted )
+[ 6 of 11] Compiling SymEVM.Prelude.P ( lib/SymEVM/Prelude/P.hs, interpreted )
+[ 7 of 11] Compiling SymEVM.Prelude.B.B ( lib/SymEVM/Prelude/B/B.hs, interpreted )
+[ 8 of 11] Compiling SymEVM.Prelude.B.B20 ( lib/SymEVM/Prelude/B/B20.hs, interpreted )
+[ 9 of 11] Compiling SymEVM.Prelude.B ( lib/SymEVM/Prelude/B.hs, interpreted )
+[10 of 11] Compiling SymEVM.Prelude   ( lib/SymEVM/Prelude.hs, interpreted )
+[11 of 11] Compiling SymEVM.Data.Transaction ( lib/SymEVM/Data/Transaction.hs, interpreted )
+Ok, modules loaded: SymEVM.Data.Transaction, SymEVM.Prelude, SymEVM.Prelude.Error, SymEVM.Prelude.P, SymEVM.Prelude.B, SymEVM.Prelude.P.P, SymEVM.Prelude.P.P256, SymEVM.Prelude.P.P5, SymEVM.Prelude.B.B, SymEVM.Prelude.B.B20, SymEVM.Prelude.B.B0.
+*SymEVM.Data.Transaction> :q
+Leaving GHCi.
+[ins@hamilton symevm]$ cabal repl
+Preprocessing library symevm-0.1.0.0...
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+[ 1 of 11] Compiling SymEVM.Prelude.B.B0 ( lib/SymEVM/Prelude/B/B0.hs, interpreted )
+[ 2 of 11] Compiling SymEVM.Prelude.Error ( lib/SymEVM/Prelude/Error.hs, interpreted )
+[ 3 of 11] Compiling SymEVM.Prelude.P.P ( lib/SymEVM/Prelude/P/P.hs, interpreted )
+[ 4 of 11] Compiling SymEVM.Prelude.P.P256 ( lib/SymEVM/Prelude/P/P256.hs, interpreted )
+[ 5 of 11] Compiling SymEVM.Prelude.P.P5 ( lib/SymEVM/Prelude/P/P5.hs, interpreted )
+[ 6 of 11] Compiling SymEVM.Prelude.P ( lib/SymEVM/Prelude/P.hs, interpreted )
+[ 7 of 11] Compiling SymEVM.Prelude.B.B ( lib/SymEVM/Prelude/B/B.hs, interpreted )
+[ 8 of 11] Compiling SymEVM.Prelude.B.B20 ( lib/SymEVM/Prelude/B/B20.hs, interpreted )
+[ 9 of 11] Compiling SymEVM.Prelude.B ( lib/SymEVM/Prelude/B.hs, interpreted )
+[10 of 11] Compiling SymEVM.Prelude   ( lib/SymEVM/Prelude.hs, interpreted )
+[11 of 11] Compiling SymEVM.Data.Transaction ( lib/SymEVM/Data/Transaction.hs, interpreted )
+Ok, modules loaded: SymEVM.Data.Transaction, SymEVM.Prelude, SymEVM.Prelude.Error, SymEVM.Prelude.P, SymEVM.Prelude.B, SymEVM.Prelude.P.P, SymEVM.Prelude.P.P256, SymEVM.Prelude.P.P5, SymEVM.Prelude.B.B, SymEVM.Prelude.B.B20, SymEVM.Prelude.B.B0.
+*SymEVM.Data.Transaction> import Data.ByteString.Base64
+*SymEVM.Data.Transaction Data.ByteString.Base64> readFile secp256k1-key.pem
+
+<interactive>:3:10: Not in scope: ‚Äòsecp256k1‚Äô
+
+<interactive>:3:20: Not in scope: ‚Äòkey‚Äô
+
+<interactive>:3:24:
+    Not in scope: ‚Äòpem‚Äô
+    Perhaps you meant ‚Äòrem‚Äô (imported from Prelude)
+*SymEVM.Data.Transaction Data.ByteString.Base64> readFile "secp256k1-key.pem"
+"-----BEGIN EC PRIVATE KEY-----\nMHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK\noUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrI\nRwPhFFec7ALRNmF5sfGyeXBmI0zUWw==\n-----END EC PRIVATE KEY-----\n"
+*SymEVM.Data.Transaction Data.ByteString.Base64> lines $ readFile "secp256k1-key.pem"
+
+<interactive>:5:9:
+    Couldn't match type ‚ÄòIO String‚Äô with ‚Äò[Char]‚Äô
+    Expected type: String
+      Actual type: IO String
+    In the second argument of ‚Äò($)‚Äô, namely
+      ‚ÄòreadFile "secp256k1-key.pem"‚Äô
+    In the expression: lines $ readFile "secp256k1-key.pem"
+*SymEVM.Data.Transaction Data.ByteString.Base64> readFile "secp256k1-key.pem" >>= lines
+
+<interactive>:6:34:
+    Couldn't match type ‚Äò[]‚Äô with ‚ÄòIO‚Äô
+    Expected type: String -> IO String
+      Actual type: String -> [String]
+    In the second argument of ‚Äò(>>=)‚Äô, namely ‚Äòlines‚Äô
+    In the expression: readFile "secp256k1-key.pem" >>= lines
+*SymEVM.Data.Transaction Data.ByteString.Base64> readFile "secp256k1-key.pem" >>= return. lines
+["-----BEGIN EC PRIVATE KEY-----","MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK","oUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrI","RwPhFFec7ALRNmF5sfGyeXBmI0zUWw==","-----END EC PRIVATE KEY-----"]
+*SymEVM.Data.Transaction Data.ByteString.Base64> readFile "secp256k1-key.pem" >>= return . lines
+["-----BEGIN EC PRIVATE KEY-----","MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK","oUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrI","RwPhFFec7ALRNmF5sfGyeXBmI0zUWw==","-----END EC PRIVATE KEY-----"]
+*SymEVM.Data.Transaction Data.ByteString.Base64> readFile "secp256k1-key.pem" >>= return . lines . drop 1
+["----BEGIN EC PRIVATE KEY-----","MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK","oUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrI","RwPhFFec7ALRNmF5sfGyeXBmI0zUWw==","-----END EC PRIVATE KEY-----"]
+*SymEVM.Data.Transaction Data.ByteString.Base64> readFile "secp256k1-key.pem" >>= return . drop 1 . lines
+["MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK","oUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrI","RwPhFFec7ALRNmF5sfGyeXBmI0zUWw==","-----END EC PRIVATE KEY-----"]
+*SymEVM.Data.Transaction Data.ByteString.Base64> x <- readFile "secp256k1-key.pem"
+*SymEVM.Data.Transaction Data.ByteString.Base64>
+*SymEVM.Data.Transaction Data.ByteString.Base64> x
+"-----BEGIN EC PRIVATE KEY-----\nMHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK\noUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrI\nRwPhFFec7ALRNmF5sfGyeXBmI0zUWw==\n-----END EC PRIVATE KEY-----\n"
+*SymEVM.Data.Transaction Data.ByteString.Base64> take (length x - 1) x
+"-----BEGIN EC PRIVATE KEY-----\nMHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK\noUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrI\nRwPhFFec7ALRNmF5sfGyeXBmI0zUWw==\n-----END EC PRIVATE KEY-----"
+*SymEVM.Data.Transaction Data.ByteString.Base64> take (length x - 1) . lines x
+
+<interactive>:15:23:
+    Couldn't match expected type ‚Äòa -> [a1]‚Äô
+                with actual type ‚Äò[String]‚Äô
+    Relevant bindings include
+      it :: a -> [a1] (bound at <interactive>:15:1)
+    Possible cause: ‚Äòlines‚Äô is applied to too many arguments
+    In the second argument of ‚Äò(.)‚Äô, namely ‚Äòlines x‚Äô
+    In the expression: take (length x - 1) . lines x
+*SymEVM.Data.Transaction Data.ByteString.Base64> take (length x - 1) . lines $ x
+["-----BEGIN EC PRIVATE KEY-----","MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK","oUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrI","RwPhFFec7ALRNmF5sfGyeXBmI0zUWw==","-----END EC PRIVATE KEY-----"]
+*SymEVM.Data.Transaction Data.ByteString.Base64> xs = lines xtake (length x - 1) . lines $ x
+
+<interactive>:17:4: parse error on input ‚Äò=‚Äô
+*SymEVM.Data.Transaction Data.ByteString.Base64> xs = lines x
+
+<interactive>:18:4: parse error on input ‚Äò=‚Äô
+*SymEVM.Data.Transaction Data.ByteString.Base64> let xs = lines x
+*SymEVM.Data.Transaction Data.ByteString.Base64> xs
+["-----BEGIN EC PRIVATE KEY-----","MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK","oUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrI","RwPhFFec7ALRNmF5sfGyeXBmI0zUWw==","-----END EC PRIVATE KEY-----"]
+*SymEVM.Data.Transaction Data.ByteString.Base64> take (length xs - 1)
+
+<interactive>:21:1:
+    No instance for (Show ([a0] -> [a0]))
+      (maybe you haven't applied enough arguments to a function?)
+      arising from a use of ‚Äòprint‚Äô
+    In a stmt of an interactive GHCi command: print it
+*SymEVM.Data.Transaction Data.ByteString.Base64> take (length xs - 1) xs
+["-----BEGIN EC PRIVATE KEY-----","MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK","oUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrI","RwPhFFec7ALRNmF5sfGyeXBmI0zUWw=="]
+*SymEVM.Data.Transaction Data.ByteString.Base64> drop 1 . take (length xs - 1) xs
+
+<interactive>:23:10:
+    Couldn't match expected type ‚Äòa -> [a1]‚Äô
+                with actual type ‚Äò[String]‚Äô
+    Relevant bindings include
+      it :: a -> [a1] (bound at <interactive>:23:1)
+    Possible cause: ‚Äòtake‚Äô is applied to too many arguments
+    In the second argument of ‚Äò(.)‚Äô, namely ‚Äòtake (length xs - 1) xs‚Äô
+    In the expression: drop 1 . take (length xs - 1) xs
+*SymEVM.Data.Transaction Data.ByteString.Base64> drop 1 . take (length xs - 1) $ xs
+["MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK","oUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrI","RwPhFFec7ALRNmF5sfGyeXBmI0zUWw=="]
+*SymEVM.Data.Transaction Data.ByteString.Base64> head . drop 1 . take (length xs - 1) $ xs
+"MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK"
+*SymEVM.Data.Transaction Data.ByteString.Base64> decode . head . drop 1 . take (length xs - 1) $ xs
+
+<interactive>:26:49:
+    Couldn't match type ‚Äò[Char]‚Äô
+                   with ‚ÄòData.ByteString.Internal.ByteString‚Äô
+    Expected type: [Data.ByteString.Internal.ByteString]
+      Actual type: [String]
+    In the second argument of ‚Äò($)‚Äô, namely ‚Äòxs‚Äô
+    In the expression:
+      decode . head . drop 1 . take (length xs - 1) $ xs
+*SymEVM.Data.Transaction Data.ByteString.Base64> pack . head . drop 1 . take (length xs - 1) $ xs
+
+<interactive>:27:1: Not in scope: ‚Äòpack‚Äô
+*SymEVM.Data.Transaction Data.ByteString.Base64> imprt Data.ByteString.Lazy
+
+<interactive>:28:1: Not in scope: ‚Äòimprt‚Äô
+
+<interactive>:28:7:
+    Not in scope: data constructor ‚ÄòData.ByteString.Lazy‚Äô
+*SymEVM.Data.Transaction Data.ByteString.Base64> import Data.ByteString.Lazy
+*SymEVM.Data.Transaction Data.ByteString.Base64 Data.ByteString.Lazy> pack . head . drop 1 . take (length xs - 1) $ xs
+
+<interactive>:30:8:
+    Ambiguous occurrence ‚Äòhead‚Äô
+    It could refer to either ‚ÄòPrelude.head‚Äô,
+                             imported from ‚ÄòPrelude‚Äô at lib/SymEVM/Data/Transaction.hs:1:8-30
+                             (and originally defined in ‚ÄòGHC.List‚Äô)
+                          or ‚ÄòData.ByteString.Lazy.head‚Äô,
+                             imported from ‚ÄòData.ByteString.Lazy‚Äô
+
+<interactive>:30:15:
+    Ambiguous occurrence ‚Äòdrop‚Äô
+    It could refer to either ‚ÄòPrelude.drop‚Äô,
+                             imported from ‚ÄòPrelude‚Äô at lib/SymEVM/Data/Transaction.hs:1:8-30
+                             (and originally defined in ‚ÄòGHC.List‚Äô)
+                          or ‚ÄòData.ByteString.Lazy.drop‚Äô,
+                             imported from ‚ÄòData.ByteString.Lazy‚Äô
+
+<interactive>:30:24:
+    Ambiguous occurrence ‚Äòtake‚Äô
+    It could refer to either ‚ÄòPrelude.take‚Äô,
+                             imported from ‚ÄòPrelude‚Äô at lib/SymEVM/Data/Transaction.hs:1:8-30
+                             (and originally defined in ‚ÄòGHC.List‚Äô)
+                          or ‚ÄòData.ByteString.Lazy.take‚Äô,
+                             imported from ‚ÄòData.ByteString.Lazy‚Äô
+
+<interactive>:30:30:
+    Ambiguous occurrence ‚Äòlength‚Äô
+    It could refer to either ‚ÄòPrelude.length‚Äô,
+                             imported from ‚ÄòPrelude‚Äô at lib/SymEVM/Data/Transaction.hs:1:8-30
+                             (and originally defined in ‚ÄòData.Foldable‚Äô)
+                          or ‚ÄòData.ByteString.Lazy.length‚Äô,
+                             imported from ‚ÄòData.ByteString.Lazy‚Äô
+*SymEVM.Data.Transaction Data.ByteString.Base64 Data.ByteString.Lazy> :q
+Leaving GHCi.
+[ins@hamilton symevm]$ cabal repl
+Preprocessing library symevm-0.1.0.0...
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+[ 1 of 11] Compiling SymEVM.Prelude.B.B0 ( lib/SymEVM/Prelude/B/B0.hs, interpreted )
+[ 2 of 11] Compiling SymEVM.Prelude.Error ( lib/SymEVM/Prelude/Error.hs, interpreted )
+[ 3 of 11] Compiling SymEVM.Prelude.P.P ( lib/SymEVM/Prelude/P/P.hs, interpreted )
+[ 4 of 11] Compiling SymEVM.Prelude.P.P256 ( lib/SymEVM/Prelude/P/P256.hs, interpreted )
+[ 5 of 11] Compiling SymEVM.Prelude.P.P5 ( lib/SymEVM/Prelude/P/P5.hs, interpreted )
+[ 6 of 11] Compiling SymEVM.Prelude.P ( lib/SymEVM/Prelude/P.hs, interpreted )
+[ 7 of 11] Compiling SymEVM.Prelude.B.B ( lib/SymEVM/Prelude/B/B.hs, interpreted )
+[ 8 of 11] Compiling SymEVM.Prelude.B.B20 ( lib/SymEVM/Prelude/B/B20.hs, interpreted )
+[ 9 of 11] Compiling SymEVM.Prelude.B ( lib/SymEVM/Prelude/B.hs, interpreted )
+[10 of 11] Compiling SymEVM.Prelude   ( lib/SymEVM/Prelude.hs, interpreted )
+[11 of 11] Compiling SymEVM.Data.Transaction ( lib/SymEVM/Data/Transaction.hs, interpreted )
+Ok, modules loaded: SymEVM.Data.Transaction, SymEVM.Prelude, SymEVM.Prelude.Error, SymEVM.Prelude.P, SymEVM.Prelude.B, SymEVM.Prelude.P.P, SymEVM.Prelude.P.P256, SymEVM.Prelude.P.P5, SymEVM.Prelude.B.B, SymEVM.Prelude.B.B20, SymEVM.Prelude.B.B0.
+*SymEVM.Data.Transaction> x <- readFile "secp256k1-key.pem"
+*SymEVM.Data.Transaction> let xs = lines x
+*SymEVM.Data.Transaction> import qualified Data.ByteString.Lazy as L
+*SymEVM.Data.Transaction L> L.pack . head . drop 1 . take (length xs - 1) $ xs
+
+<interactive>:5:49:
+    Couldn't match type ‚ÄòChar‚Äô with ‚ÄòGHC.Word.Word8‚Äô
+    Expected type: [[GHC.Word.Word8]]
+      Actual type: [String]
+    In the second argument of ‚Äò($)‚Äô, namely ‚Äòxs‚Äô
+    In the expression:
+      L.pack . head . drop 1 . take (length xs - 1) $ xs
+*SymEVM.Data.Transaction L> :q
+Leaving GHCi.
+[ins@hamilton symevm]$ cabal repl
+Preprocessing library symevm-0.1.0.0...
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+[ 1 of 11] Compiling SymEVM.Prelude.B.B0 ( lib/SymEVM/Prelude/B/B0.hs, interpreted )
+[ 2 of 11] Compiling SymEVM.Prelude.Error ( lib/SymEVM/Prelude/Error.hs, interpreted )
+[ 3 of 11] Compiling SymEVM.Prelude.P.P ( lib/SymEVM/Prelude/P/P.hs, interpreted )
+[ 4 of 11] Compiling SymEVM.Prelude.P.P256 ( lib/SymEVM/Prelude/P/P256.hs, interpreted )
+[ 5 of 11] Compiling SymEVM.Prelude.P.P5 ( lib/SymEVM/Prelude/P/P5.hs, interpreted )
+[ 6 of 11] Compiling SymEVM.Prelude.P ( lib/SymEVM/Prelude/P.hs, interpreted )
+[ 7 of 11] Compiling SymEVM.Prelude.B.B ( lib/SymEVM/Prelude/B/B.hs, interpreted )
+[ 8 of 11] Compiling SymEVM.Prelude.B.B20 ( lib/SymEVM/Prelude/B/B20.hs, interpreted )
+[ 9 of 11] Compiling SymEVM.Prelude.B ( lib/SymEVM/Prelude/B.hs, interpreted )
+[10 of 11] Compiling SymEVM.Prelude   ( lib/SymEVM/Prelude.hs, interpreted )
+[11 of 11] Compiling SymEVM.Data.Transaction ( lib/SymEVM/Data/Transaction.hs, interpreted )
+Ok, modules loaded: SymEVM.Data.Transaction, SymEVM.Prelude, SymEVM.Prelude.Error, SymEVM.Prelude.P, SymEVM.Prelude.B, SymEVM.Prelude.P.P, SymEVM.Prelude.P.P256, SymEVM.Prelude.P.P5, SymEVM.Prelude.B.B, SymEVM.Prelude.B.B20, SymEVM.Prelude.B.B0.
+*SymEVM.Data.Transaction> x <- readFile "secp256k1-key.pem"
+*SymEVM.Data.Transaction> let xs = lines x
+*SymEVM.Data.Transaction> import qualified Data.ByteString.Lazy.Char8 as L
+*SymEVM.Data.Transaction L> L.pack . head . drop 1 . take (length xs - 1) $ xs
+"MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAK"
+*SymEVM.Data.Transaction L> decode . L.pack . head . drop 1 . take (length xs - 1) $ xs
+
+<interactive>:6:1: Not in scope: ‚Äòdecode‚Äô
+*SymEVM.Data.Transaction L> import Data.ByteString.Base64
+*SymEVM.Data.Transaction L Data.ByteString.Base64> decode . L.pack . head . drop 1 . take (length xs - 1) $ xs
+
+<interactive>:8:10:
+    Couldn't match type ‚ÄòL.ByteString‚Äô
+                   with ‚ÄòData.ByteString.Internal.ByteString‚Äô
+    NB: ‚ÄòL.ByteString‚Äô is defined in ‚ÄòData.ByteString.Lazy.Internal‚Äô
+        ‚ÄòData.ByteString.Internal.ByteString‚Äô
+          is defined in ‚ÄòData.ByteString.Internal‚Äô
+    Expected type: [Char] -> Data.ByteString.Internal.ByteString
+      Actual type: [Char] -> L.ByteString
+    In the first argument of ‚Äò(.)‚Äô, namely ‚ÄòL.pack‚Äô
+    In the second argument of ‚Äò(.)‚Äô, namely
+      ‚ÄòL.pack . head . drop 1 . take (length xs - 1)‚Äô
+*SymEVM.Data.Transaction L Data.ByteString.Base64> :Q
+unknown command ':Q'
+use :? for help.
+*SymEVM.Data.Transaction L Data.ByteString.Base64> :q
+Leaving GHCi.
+[ins@hamilton symevm]$ cabal repl
+Preprocessing library symevm-0.1.0.0...
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+[ 1 of 11] Compiling SymEVM.Prelude.B.B0 ( lib/SymEVM/Prelude/B/B0.hs, interpreted )
+[ 2 of 11] Compiling SymEVM.Prelude.Error ( lib/SymEVM/Prelude/Error.hs, interpreted )
+[ 3 of 11] Compiling SymEVM.Prelude.P.P ( lib/SymEVM/Prelude/P/P.hs, interpreted )
+[ 4 of 11] Compiling SymEVM.Prelude.P.P256 ( lib/SymEVM/Prelude/P/P256.hs, interpreted )
+[ 5 of 11] Compiling SymEVM.Prelude.P.P5 ( lib/SymEVM/Prelude/P/P5.hs, interpreted )
+[ 6 of 11] Compiling SymEVM.Prelude.P ( lib/SymEVM/Prelude/P.hs, interpreted )
+[ 7 of 11] Compiling SymEVM.Prelude.B.B ( lib/SymEVM/Prelude/B/B.hs, interpreted )
+[ 8 of 11] Compiling SymEVM.Prelude.B.B20 ( lib/SymEVM/Prelude/B/B20.hs, interpreted )
+[ 9 of 11] Compiling SymEVM.Prelude.B ( lib/SymEVM/Prelude/B.hs, interpreted )
+[10 of 11] Compiling SymEVM.Prelude   ( lib/SymEVM/Prelude.hs, interpreted )
+[11 of 11] Compiling SymEVM.Data.Transaction ( lib/SymEVM/Data/Transaction.hs, interpreted )
+Ok, modules loaded: SymEVM.Data.Transaction, SymEVM.Prelude, SymEVM.Prelude.Error, SymEVM.Prelude.P, SymEVM.Prelude.B, SymEVM.Prelude.P.P, SymEVM.Prelude.P.P256, SymEVM.Prelude.P.P5, SymEVM.Prelude.B.B, SymEVM.Prelude.B.B20, SymEVM.Prelude.B.B0.
+*SymEVM.Data.Transaction> x <- readFile "secp256k1-key.pem"
+*SymEVM.Data.Transaction> let xs = lines x
+*SymEVM.Data.Transaction> import Data.ByteString.Base64
+*SymEVM.Data.Transaction Data.ByteString.Base64> import qualified Data.ByteString.Char8 as B
+*SymEVM.Data.Transaction Data.ByteString.Base64 B> decode . B.pack . head . drop 1 . take (length x
+s - 1) $ xs
+Right "0t\STX\SOH\SOH\EOT (3\"+\RS\149\213\226\234zDi\SOzW\220\140fe\139\&3\220\210\&0\172\184_\SUBxt9?\160\a\ACK\ENQ+\129\EOT\NUL\n"
+*SymEVM.Data.Transaction Data.ByteString.Base64 B> :q
+Leaving GHCi.
+[ins@hamilton symevm]$ base64
+^C
+[ins@hamilton symevm]$ man base64
+[ins@hamilton symevm]$ base64 -D "MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAKoUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrIRwPhFFec7ALRNmF5sfGyeXBmI0zUWw==
+> "
+base64: illegal option -- D
+base64  --  Encode/decode file as base64.  Call:
+            base64 [-e / -d] [options] [infile] [outfile]
+
+Options:
+           --copyright       Print copyright information
+           -d, --decode      Decode base64 encoded file
+           -e, --encode      Encode file into base64
+           -n, --noerrcheck  Ignore errors when decoding
+           -u, --help        Print this message
+           --version         Print version number
+
+by John Walker
+http://www.fourmilab.ch/
+[ins@hamilton symevm]$ base64 -d "MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAKo
+UQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrIRwPhFFec7ALRNmF5sfGyeXBmI0zUWw==
+"
+Cannot open input file MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAKoUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrIRwPhFFec7ALRNmF5sfGyeXBmI0zUWw==
+
+[ins@hamilton symevm]$ echo -n 'MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAKoUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrIRwPhFFec7ALRNmF5sfGyeXBmI0zUWw==
+> ' | base64 -d
+0t (3"+ïDizW‹åfeã30¨∏_xt9?†+Å
+°DB
+œáb™…≤GWúay±pf#L[ins@hamilton symevm]$ clear
+[ins@hamilton symevm]$ ghci
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+Prelude> x <- readFile "secp256k1-key.pem"
+Prelude> let xs = lines x
+Prelude> import Data.ByteString.Base64
+
+<no location info>:
+    Could not find module ‚ÄòData.ByteString.Base64‚Äô
+    Perhaps you meant
+      Data.ByteString.Lazy (from bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6)
+      Data.ByteString.Unsafe (from bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6)
+      Data.ByteString.Builder (from bytestring-0.10.6.0@bytes_6VWy06pWzJq9evDvK2d4w6)
+Prelude> :q
+Leaving GHCi.
+[ins@hamilton symevm]$ cabal repl
+Preprocessing library symevm-0.1.0.0...
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+[ 1 of 11] Compiling SymEVM.Prelude.B.B0 ( lib/SymEVM/Prelude/B/B0.hs, interpreted )
+[ 2 of 11] Compiling SymEVM.Prelude.Error ( lib/SymEVM/Prelude/Error.hs, interpreted )
+[ 3 of 11] Compiling SymEVM.Prelude.P.P ( lib/SymEVM/Prelude/P/P.hs, interpreted )
+[ 4 of 11] Compiling SymEVM.Prelude.P.P256 ( lib/SymEVM/Prelude/P/P256.hs, interpreted )
+[ 5 of 11] Compiling SymEVM.Prelude.P.P5 ( lib/SymEVM/Prelude/P/P5.hs, interpreted )
+[ 6 of 11] Compiling SymEVM.Prelude.P ( lib/SymEVM/Prelude/P.hs, interpreted )
+[ 7 of 11] Compiling SymEVM.Prelude.B.B ( lib/SymEVM/Prelude/B/B.hs, interpreted )
+[ 8 of 11] Compiling SymEVM.Prelude.B.B20 ( lib/SymEVM/Prelude/B/B20.hs, interpreted )
+[ 9 of 11] Compiling SymEVM.Prelude.B ( lib/SymEVM/Prelude/B.hs, interpreted )
+[10 of 11] Compiling SymEVM.Prelude   ( lib/SymEVM/Prelude.hs, interpreted )
+[11 of 11] Compiling SymEVM.Data.Transaction ( lib/SymEVM/Data/Transaction.hs, interpreted )
+Ok, modules loaded: SymEVM.Data.Transaction, SymEVM.Prelude, SymEVM.Prelude.Error, SymEVM.Prelude.P, SymEVM.Prelude.B, SymEVM.Prelude.P.P, SymEVM.Prelude.P.P256, SymEVM.Prelude.P.P5, SymEVM.Prelude.B.B, SymEVM.Prelude.B.B20, SymEVM.Prelude.B.B0.
+*SymEVM.Data.Transaction> x <- readFile "secp256k1-key.pem"
+*SymEVM.Data.Transaction> let xs = lines x
+*SymEVM.Data.Transaction> import Data.ByteString.Base64
+*SymEVM.Data.Transaction Data.ByteString.Base64> import qualified Data.ByteString.Char8 as B
+*SymEVM.Data.Transaction Data.ByteString.Base64 B> decode . B.pack . concat . drop 1 . take (length
+ xs - 1) $ xs
+Right "0t\STX\SOH\SOH\EOT (3\"+\RS\149\213\226\234zDi\SOzW\220\140fe\139\&3\220\210\&0\172\184_\SUBxt9?\160\a\ACK\ENQ+\129\EOT\NUL\n\161D\ETXB\NUL\EOT\f\190\255>H\239\234\ENQ\206\227(\145\136\&6\252\&2\131.\151I\201\ENQ!\218\207\r\254\154\155/\RS\r\207\135b\230\208\170\201\178\218\200G\ETX\225\DC4W\156\236\STX\209\&6ay\177\241\178ypf#L\212["
+*SymEVM.Data.Transaction Data.ByteString.Base64 B> import Crypto.Hash.SHA3
+
+<no location info>:
+    Could not find module ‚ÄòCrypto.Hash.SHA3‚Äô
+    It is not a module in the current program, or in any known package.
+*SymEVM.Data.Transaction Data.ByteString.Base64 B> :q
+Leaving GHCi.
+[ins@hamilton symevm]$ cabal repl
+./symevm.cabal has been changed. Re-configuring with most recently used
+options. If this fails, please run configure manually.
+Resolving dependencies...
+Configuring symevm-0.1.0.0...
+Preprocessing library symevm-0.1.0.0...
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+[ 1 of 11] Compiling SymEVM.Prelude.B.B0 ( lib/SymEVM/Prelude/B/B0.hs, interpreted )
+[ 2 of 11] Compiling SymEVM.Prelude.Error ( lib/SymEVM/Prelude/Error.hs, interpreted )
+[ 3 of 11] Compiling SymEVM.Prelude.P.P ( lib/SymEVM/Prelude/P/P.hs, interpreted )
+[ 4 of 11] Compiling SymEVM.Prelude.P.P256 ( lib/SymEVM/Prelude/P/P256.hs, interpreted )
+[ 5 of 11] Compiling SymEVM.Prelude.P.P5 ( lib/SymEVM/Prelude/P/P5.hs, interpreted )
+[ 6 of 11] Compiling SymEVM.Prelude.P ( lib/SymEVM/Prelude/P.hs, interpreted )
+[ 7 of 11] Compiling SymEVM.Prelude.B.B ( lib/SymEVM/Prelude/B/B.hs, interpreted )
+[ 8 of 11] Compiling SymEVM.Prelude.B.B20 ( lib/SymEVM/Prelude/B/B20.hs, interpreted )
+[ 9 of 11] Compiling SymEVM.Prelude.B ( lib/SymEVM/Prelude/B.hs, interpreted )
+[10 of 11] Compiling SymEVM.Prelude   ( lib/SymEVM/Prelude.hs, interpreted )
+[11 of 11] Compiling SymEVM.Data.Transaction ( lib/SymEVM/Data/Transaction.hs, interpreted )
+Ok, modules loaded: SymEVM.Data.Transaction, SymEVM.Prelude, SymEVM.Prelude.Error, SymEVM.Prelude.P, SymEVM.Prelude.B, SymEVM.Prelude.P.P, SymEVM.Prelude.P.P256, SymEVM.Prelude.P.P5, SymEVM.Prelude.B.B, SymEVM.Prelude.B.B20, SymEVM.Prelude.B.B0.
+*SymEVM.Data.Transaction> import Crypto.Hash.SHA3
+*SymEVM.Data.Transaction Crypto.Hash.SHA3> x <- readFile "secp256k1-key.pem"
+*SymEVM.Data.Transaction Crypto.Hash.SHA3> let xs = lines x
+*SymEVM.Data.Transaction Crypto.Hash.SHA3> import Data.ByteString.Base64
+*SymEVM.Data.Transaction Crypto.Hash.SHA3 Data.ByteString.Base64> import qualified Data.ByteString.Char8 as B
+*SymEVM.Data.Transaction Crypto.Hash.SHA3 Data.ByteString.Base64 B> decode . B.pack . concat . drop 1 . take (length xs - 1) $ xs
+Right "0t\STX\SOH\SOH\EOT (3\"+\RS\149\213\226\234zDi\SOzW\220\140fe\139\&3\220\210\&0\172\184_\SUBxt9?\160\a\ACK\ENQ+\129\EOT\NUL\n\161D\ETXB\NUL\EOT\f\190\255>H\239\234\ENQ\206\227(\145\136\&6\252\&2\131.\151I\201\ENQ!\218\207\r\254\154\155/\RS\r\207\135b\230\208\170\201\178\218\200G\ETX\225\DC4W\156\236\STX\209\&6ay\177\241\178ypf#L\212["
+*SymEVM.Data.Transaction Crypto.Hash.SHA3 Data.ByteString.Base64 B> hash 256 $
+
+<interactive>:8:12:
+    parse error (possibly incorrect indentation or mismatched brackets)
+*SymEVM.Data.Transaction Crypto.Hash.SHA3 Data.ByteString.Base64 B> hash 256 $ decode . B.pack . co
+ncat . drop 1 . take (length xs - 1) $ xs
+
+<interactive>:9:12:
+    Couldn't match expected type ‚ÄòB.ByteString‚Äô
+                with actual type ‚ÄòEither String B.ByteString‚Äô
+    In the second argument of ‚Äò($)‚Äô, namely
+      ‚Äòdecode . B.pack . concat . drop 1 . take (length xs - 1) $ xs‚Äô
+    In the expression:
+      hash 256
+      $ decode . B.pack . concat . drop 1 . take (length xs - 1) $ xs
+    In an equation for ‚Äòit‚Äô:
+        it
+          = hash 256
+            $ decode . B.pack . concat . drop 1 . take (length xs - 1) $ xs
+*SymEVM.Data.Transaction Crypto.Hash.SHA3 Data.ByteString.Base64 B> let Right r = MHQCAQEEICgzIiseldXi6npEaQ56V9yMZmWLM9zSMKy4Xxp4dDk/oAcGBSuBBAAKoUQDQgAEDL7/Pkjv6gXO4yiRiDb8MoMul0nJBSHazw3+mpsvHg3Ph2Lm0KrJstrIRwPhFFec7ALRNmF5sfGyeXBmI0zUWw==
+
+<interactive>:10:175:
+    parse error (possibly incorrect indentation or mismatched brackets)
+*SymEVM.Data.Transaction Crypto.Hash.SHA3 Data.ByteString.Base64 B> let Right r = decode . B.pack .
+ concat . drop 1 . take (length xs - 1) $ xs
+*SymEVM.Data.Transaction Crypto.Hash.SHA3 Data.ByteString.Base64 B> r
+"0t\STX\SOH\SOH\EOT (3\"+\RS\149\213\226\234zDi\SOzW\220\140fe\139\&3\220\210\&0\172\184_\SUBxt9?\160\a\ACK\ENQ+\129\EOT\NUL\n\161D\ETXB\NUL\EOT\f\190\255>H\239\234\ENQ\206\227(\145\136\&6\252\&2\131.\151I\201\ENQ!\218\207\r\254\154\155/\RS\r\207\135b\230\208\170\201\178\218\200G\ETX\225\DC4W\156\236\STX\209\&6ay\177\241\178ypf#L\212["
+*SymEVM.Data.Transaction Crypto.Hash.SHA3 Data.ByteString.Base64 B> hash 256 r
+"r\176\DC3e\214\250\229\167\v\233+\191\SUB\206\171\177\154\143E\163\&9\146\DC2I\138\152\DC4zU\157mR"
+*SymEVM.Data.Transaction Crypto.Hash.SHA3 Data.ByteString.Base64 B> B.drop 12 $ hash 256 r
+"\SUB\206\171\177\154\143E\163\&9\146\DC2I\138\152\DC4zU\157mR"
+
