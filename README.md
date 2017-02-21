@@ -18,21 +18,21 @@ Once you have it compiled and running, you can use -h or --help to print the usa
 
   1. [Haskell](https://www.haskell.org/)
   2. [Cabal](https://www.haskell.org/cabal/)
+  3. [Stack](https://www.haskellstack.org/)
 
-I develop on a mac, and these are both available as packages via Homebrew. I would imagine your system also has packages for these.
+I develop on a Mac, these are all available as packages via [Homebrew](https://brew.sh/). I imagine your system also has packages for these.
 
 ### Build
 
-__WARNING__: You'll notice that there are these 'cabal sandbox' commands in the build script. These ensure that you don't enter dependency
-hell induced by cabal. I pity the fool who issues 'cabal install' without a [sandbox](https://www.haskell.org/cabal/users-guide/installing-packages.html#developing-with-sandboxes). If you do so, may [Davy Jones](https://www.youtube.com/watch?v=zo-OYwh6KHA) have mercy on your soul.
+    % stack setup
+    % stack build
 
-    % ./build.sh
+The `stack setup` stage is only necessary the first time. This will sandbox a GHC install. Every time after you need only run `stack build`.
 
 ### Run
 
+    % stack exec symevm
+
+### Example
+
     % ./example.sh
-
-or
-
-    % ./dist/build/SymEVM/symevm
-
