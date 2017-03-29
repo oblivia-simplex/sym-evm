@@ -24,19 +24,14 @@ header = do
     prg <- getProgName
     return $ "Usage: " ++ prg ++ " [OPTIONS...]"
 
-data Options = Options { optKeys :: IO [String] }
+data Options = Options { }
 
 defaultOptions :: Options
-defaultOptions = Options { optKeys = return [] }
+defaultOptions = Options { }
 
 options :: [ OptDescr (Options -> IO Options) ]
 options =
-    [ Option ['k'] ["keys"] 
-        (ReqArg 
-            (\arg opt -> return opt { optKeys = fmap lines (readFile arg) }) 
-            "FILE")
-        "keys FILE" 
-    , Option "V" ["version"] 
+    [ Option "V" ["version"] 
         (NoArg (\_ -> do
                         hPutStrLn stderr ("Version: " ++ (show version))
                         exitSuccess))

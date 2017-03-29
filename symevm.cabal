@@ -18,39 +18,25 @@ cabal-version:       >=1.10
 
 executable symevm
   main-is:             Main.hs
-  -- other-modules:       
+  other-modules:       UI.CL
   -- other-extensions:    
-  build-depends:       base >= 4.8 && < 4.9, symevm, bytestring, aeson
+  build-depends:       base >= 4.8 && < 4.9, symevm
   hs-source-dirs:      src
   default-language:    Haskell2010
 
 library
-  exposed-modules:     SymEVM.Data.Transaction, SymEVM.Prelude, SymEVM.Analysis.Sym
-  other-modules:       SymEVM.Prelude.Error
-                       SymEVM.Prelude.P,
-                       SymEVM.Prelude.P.P,
-                       SymEVM.Prelude.P.P256,
-                       SymEVM.Prelude.P.P5,
-                       SymEVM.Prelude.B,
-                       SymEVM.Prelude.B.B,
-                       SymEVM.Prelude.B.B20,
-                       SymEVM.Prelude.B.B0,
-                       SymEVM.Data.State,
-                       SymEVM.Data.World,
-                       SymEVM.Data.Machine,
-                       SymEVM.Data.ProgramCounter,
-                       SymEVM.Data.Stack,
-                       SymEVM.Data.StackFrame,
-                       SymEVM.Data.Symbol,
-                       SymEVM.Data.Substate,
-                       SymEVM.Data.Env,
-                       SymEVM.Data.Code
-  build-depends:       base >= 4.8 && < 4.9
-                       , bytestring
-                       , mtl, split
-                       , base64-bytestring
-                       , cryptohash
-                       , array
-                       , either
+  exposed-modules:     SymEVM.Data.Sym.Err, SymEVM.Data.Common.Code, SymEVM.Analysis.Sym
+  other-modules:       SymEVM.Data.Sym.State
+                       SymEVM.Data.Sym.World
+                       SymEVM.Data.Sym.Machine
+                       SymEVM.Data.Sym.Stack
+                       SymEVM.Data.Sym.StackFrame
+                       SymEVM.Data.Sym.Symbol
+                       SymEVM.Data.Sym.Substate
+                       SymEVM.Data.Sym.Env
+                       SymEVM.Data.Common.ProgCnt
+  build-depends:       base >= 4.8 && < 4.9,
+                       array,
+                       either
   hs-source-dirs:      lib
   default-language:    Haskell2010
