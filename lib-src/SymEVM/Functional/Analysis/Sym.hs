@@ -1,4 +1,4 @@
-module SymEVM.Analysis.Sym where
+module SymEVM.Functional.Analysis.Sym where
 
 import Data.Array
 import Data.Either
