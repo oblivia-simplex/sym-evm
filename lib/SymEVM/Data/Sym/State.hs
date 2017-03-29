@@ -12,4 +12,4 @@ data State = State
   , machine  :: Machine
   , substate :: Substate
   , env      :: Env
-  } deriving ( Eq )
+  } deriving ( Eq, Ord )

@@ -35,6 +35,7 @@ library
                        SymEVM.Data.Sym.Substate
                        SymEVM.Data.Sym.Env
                        SymEVM.Data.Common.ProgCnt
+                       SymEVM.Data.Util.Set
   build-depends:       base >= 4.8 && < 4.9,
                        array,
                        either

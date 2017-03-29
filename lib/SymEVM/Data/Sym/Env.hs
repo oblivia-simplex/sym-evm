@@ -4,4 +4,4 @@ import SymEVM.Data.Common.Code
 
 data Env = Env
   { code :: Code
-  } deriving ( Eq )
+  } deriving ( Eq, Ord )

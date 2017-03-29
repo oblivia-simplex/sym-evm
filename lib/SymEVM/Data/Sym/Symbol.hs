@@ -4,7 +4,7 @@ data Symbol
   = CB256 ()
   | SB256 String
   | Plus Symbol Symbol
-  | Eq Symbol Symbol deriving ( Eq )
+  | Eq Symbol Symbol deriving ( Eq, Ord )
 
 
 

@@ -6,4 +6,4 @@ import SymEVM.Data.Sym.Stack
 data Machine = Machine
   { pc    :: ProgCnt
   , stack :: Stack
-  } deriving ( Eq )
+  } deriving ( Eq, Ord )
