@@ -1,4 +1,4 @@
-module SymEVM.Data.Sym.Symbol where
+module SymEVM.Data.Util.Symbol where
 
 data Symbol
   = CB256 ()

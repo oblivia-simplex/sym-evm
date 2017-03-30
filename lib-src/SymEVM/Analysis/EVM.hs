@@ -1,17 +1,9 @@
-module SymEVM.Functional.Analysis.Sym where
+module SymEVM.Analysis.EVM where
 
 import Data.Array
 import Data.Either
 
-import SymEVM.Data.Sym.State
-
-import SymEVM.Data.Sym.Machine
-import SymEVM.Data.Common.ProgCnt
-
-import SymEVM.Data.Sym.Env
-import SymEVM.Data.Common.Code
-
-import SymEVM.Data.Sym.Err
+import SymEVM.Data
 
 import qualified SymEVM.Data.Util.Set as S
 
@@ -26,9 +18,6 @@ incrPC st =
   let machine' = machine st  in
   let pc'      = pc machine' in
   st { machine = machine' { pc = pc' + 1 } }
-
--- Takes a state and performs a single step of symbolic execution
--- NOTE: This function assumes input state is well-formed (all possible steps are valid)
 
 -- | Produces the set of all next possible states. For concrete states, result will always be a set of size 1 which contains
 --   the next state. For symbolic states, there could be many possible next states (e.g. multiple jump destinations).

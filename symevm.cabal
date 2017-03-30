@@ -25,19 +25,22 @@ executable symevm
   default-language:    Haskell2010
 
 library
-  exposed-modules:     SymEVM.Data.Sym.Err, SymEVM.Data.Common.Code, SymEVM.Functional.Analysis.Sym
-  other-modules:       SymEVM.Data.Sym.State
-                       SymEVM.Data.Sym.World
-                       SymEVM.Data.Sym.Machine
-                       SymEVM.Data.Sym.Stack
-                       SymEVM.Data.Sym.StackFrame
-                       SymEVM.Data.Sym.Symbol
-                       SymEVM.Data.Sym.Substate
-                       SymEVM.Data.Sym.Env
-                       SymEVM.Data.Common.ProgCnt
+  exposed-modules:     SymEVM.Analysis.EVM,
+                       SymEVM.Data
+                       SymEVM.Data.EVM
+                       SymEVM.Data.EVM.State
+                       SymEVM.Data.EVM.State.World
+                       SymEVM.Data.EVM.State.Machine
+                       SymEVM.Data.EVM.State.Machine.ProgCnt
+                       SymEVM.Data.EVM.State.Machine.Stack
+                       SymEVM.Data.EVM.State.Substate
+                       SymEVM.Data.EVM.State.Env
+                       SymEVM.Data.EVM.State.Env.Code
+                       SymEVM.Data.EVM.Err
+                       SymEVM.Data.Util
                        SymEVM.Data.Util.Set
-                       SymEVM.Functional.Interface.FStack
-                       SymEVM.Functional.Impl.Sym.FStackImpl
+                       SymEVM.Data.Util.Symbol
+  -- other-modules:       
   build-depends:       base >= 4.8 && < 4.9,
                        array,
                        either

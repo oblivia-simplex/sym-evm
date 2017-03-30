@@ -1,4 +1,4 @@
-module SymEVM.Data.Common.Code where
+module SymEVM.Data.EVM.State.Env.Code where
 
 import Data.Word
 import Data.Array
