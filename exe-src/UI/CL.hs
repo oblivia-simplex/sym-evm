@@ -24,10 +24,12 @@ header = do
     prg <- getProgName
     return $ "Usage: " ++ prg ++ " [OPTIONS...]"
 
-data Options = Options { }
+data Options = Options { optOpcodeInput :: Bool
+                       }
 
 defaultOptions :: Options
-defaultOptions = Options { }
+defaultOptions = Options { optOpcodeInput = False
+                         }
 
 options :: [ OptDescr (Options -> IO Options) ]
 options =
@@ -42,6 +44,10 @@ options =
                         hPutStrLn stderr (usageInfo h options)
                         exitSuccess))
         "Show help"
+    , Option "O" ["opcode"]
+        (NoArg (\o -> do
+                        return o { optOpcodeInput = True }))
+        "Input is in opcode format"
     ]
 
 parseCL :: IO (Options, [String])

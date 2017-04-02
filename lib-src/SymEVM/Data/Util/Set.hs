@@ -17,6 +17,11 @@ instance Ord a => Ord (Set a) where
     let Set ys' = ys in
     compare xs' ys'
 
+instance Show a => Show (Set a) where
+  show xs =
+    let Set xs' = xs in
+    show xs'
+
 empty :: Set a
 empty = Set []
 

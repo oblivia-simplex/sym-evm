@@ -1,3 +1,3 @@
 #!/bin/bash
 
-stack exec symevm
+stack exec symevm -- res/etherpot.evm
