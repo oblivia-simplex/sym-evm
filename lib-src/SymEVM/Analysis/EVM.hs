@@ -16,11 +16,7 @@ baseState
           , _env     = Env      { _code = error "Code is uninitialized!" }
           }
 
--- | Classifies states as either buggy (`Err`) or valid. If a state is valid, simply injects input state into `Right`.
---   This is where all types of bug detection should live. For example, to check for divide by zero errors, add a case
---   for divide by zero.
-existsBug :: State -> Either Err State
-existsBug st = Right st
+--------------- `instr` and `err` helpers --------------
 
 incrPC :: State -> State
 incrPC st = addPC st 1
@@ -32,12 +28,17 @@ pop :: State -> (Symbol, State)
 pop st = 
   let (s0 : s') = st ^. machine . stack in
   (s0, st & (machine . stack) .~ s')
+  
+--------------- `instr` and `err` relations -----------
+
+err :: State -> Either Err State
+err st = Right st
 
 -- | Produces the set of all next possible states. For concrete states, result will always be a set of size 1 which contains
 --   the next state. For symbolic states, there could be many possible next states (e.g. multiple jump destinations).
-step :: State -> S.Set State
-step st =
-  case instr of
+instr :: State -> S.Set State
+instr st =
+  case control of
     0x00 -> -- STOP
       S.empty
     0x01 -> -- ADD (TODO)
@@ -231,10 +232,12 @@ step st =
       let st' = incrPC st in
       S.singleton st'
   where
-    instr = (st ^. env . code) ! (st ^. machine . pc)
+    control = (st ^. env . code) ! (st ^. machine . pc)
+
+--------------- `step` relation -----------------------
 
 stepBug :: State -> S.Set (Either Err State)
-stepBug st = S.map existsBug (step st)
+stepBug st = S.map err (instr st)
 
 stepErr :: State -> (S.Set Err, S.Set State)
 stepErr st = partitionEithers (stepBug st)
