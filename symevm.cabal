@@ -25,7 +25,8 @@ executable symevm
   default-language:    Haskell2010
 
 library
-  exposed-modules:     SymEVM.Analysis.EVM,
+  exposed-modules:     SymEVM.Analysis.EVM
+                       SymEVM.Analysis.Util
                        SymEVM.Data
                        SymEVM.Data.EVM
                        SymEVM.Data.EVM.State
@@ -44,6 +45,7 @@ library
   build-depends:       base >= 4.8 && < 4.9,
                        array,
                        either,
+                       containers,
                        split,
                        lens
   hs-source-dirs:      lib-src

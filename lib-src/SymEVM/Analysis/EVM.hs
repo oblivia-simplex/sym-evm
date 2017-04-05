@@ -5,6 +5,7 @@ import Data.Either
 import Control.Lens
 
 import SymEVM.Data
+import SymEVM.Analysis.Util as U
 
 import qualified SymEVM.Data.Util.Set as S
 
@@ -236,24 +237,16 @@ instr st =
 
 --------------- `step` relation -----------------------
 
-stepBug :: State -> S.Set (Either Err State)
-stepBug st = S.map err (instr st)
+step' :: State -> S.Set (Either Err State)
+step' st = S.map err (instr st)
 
-stepErr :: State -> (S.Set Err, S.Set State)
-stepErr st = partitionEithers (stepBug st)
-  where
-    partitionEithers eithers = S.foldl partitionEither (S.empty, S.empty) eithers -- TODO: Put in Data.Either extension module
-    partitionEither acc curr = case curr of
-                                 Left  val -> (S.insert val (fst acc), snd acc)
-                                 Right val -> (fst acc, S.insert val (snd acc))
+step :: State -> (S.Set Err, S.Set State)
+step st = U.partitionEithers (step' st)
 
 eval' :: (S.Set Err, S.Set State) -> (S.Set Err, S.Set State)
 eval' curr =
-  let errs  = fst curr                           
-      sts   = snd curr                           
-      tmp   = flattenPairs (S.map stepErr sts)   
-      errs' = fst tmp                            
-      sts'  = snd tmp                          
+  let (errs, sts)   = curr
+      (errs', sts') = flattenPairs (S.map step sts)
   in
   (S.union errs errs', sts')
   where
