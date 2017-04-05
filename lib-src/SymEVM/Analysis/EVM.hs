@@ -2,10 +2,19 @@ module SymEVM.Analysis.EVM where
 
 import Data.Array
 import Data.Either
+import Control.Lens
 
 import SymEVM.Data
 
 import qualified SymEVM.Data.Util.Set as S
+
+baseState :: State
+baseState 
+  = State { world    = World    ()
+          , _machine = Machine  { _pc = 0, _stack = [] }
+          , substate = Substate ()
+          , _env     = Env      { _code = listArray (1, 0) [] }
+          }
 
 -- | Classifies states as either buggy (`Err`) or valid. If a state is valid, simply injects input state into `Right`.
 --   This is where all types of bug detection should live. For example, to check for divide by zero errors, add a case
@@ -17,17 +26,12 @@ incrPC :: State -> State
 incrPC st = addPC st 1
 
 addPC :: State -> Integer -> State
-addPC st amt =
-  let machine' = machine st in
-  let pc'      = pc machine' in
-  st { machine = machine' { pc = pc' + amt } }
+addPC st amt = st & (machine . pc) +~ amt
 
 pop :: State -> (Symbol, State)
 pop st = 
-  let machine'   = machine st     in
-  let stack'     = stack machine' in
-  let (s0 : s'') = stack'         in
-  (s0, st { machine = machine' { stack = s'' } })
+  let (s0 : s') = st ^. machine . stack in
+  (s0, st & (machine . stack) .~ s')
 
 -- | Produces the set of all next possible states. For concrete states, result will always be a set of size 1 which contains
 --   the next state. For symbolic states, there could be many possible next states (e.g. multiple jump destinations).
@@ -227,7 +231,7 @@ step st =
       let st' = incrPC st in
       S.singleton st'
   where
-    instr = (code . env $ st) ! (pc . machine $ st)
+    instr = (st ^. env . code) ! (st ^. machine . pc)
 
 stepBug :: State -> S.Set (Either Err State)
 stepBug st = S.map existsBug (step st)
@@ -242,11 +246,12 @@ stepErr st = partitionEithers (stepBug st)
 
 eval' :: (S.Set Err, S.Set State) -> (S.Set Err, S.Set State)
 eval' curr =
-  let errs  = fst curr                         in
-  let sts   = snd curr                         in
-  let tmp   = flattenPairs (S.map stepErr sts) in
-  let errs' = fst tmp                          in
-  let sts'  = snd tmp                          in
+  let errs  = fst curr                           
+      sts   = snd curr                           
+      tmp   = flattenPairs (S.map stepErr sts)   
+      errs' = fst tmp                            
+      sts'  = snd tmp                          
+  in
   (S.union errs errs', sts')
   where
     flattenPairs pairs   = S.foldl flattenPair (S.empty, S.empty) pairs -- TODO: Put in utility module
@@ -264,12 +269,7 @@ eval :: State -> S.Set Err
 eval st = fst (iter (S.empty, S.singleton st))
 
 inject :: Code -> State
-inject c = State
-           { world    = World    ()
-           , machine  = Machine  { pc = 0, stack = [] }
-           , substate = Substate ()
-           , env      = Env      { code = c }
-           }
+inject c = baseState & (env . code) .~ c
 
 check :: Code -> S.Set Err
 check = eval . inject
