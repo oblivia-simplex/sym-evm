@@ -9,6 +9,12 @@ import SymEVM.Analysis.Util as U
 
 import qualified SymEVM.Data.Util.Set as S
 
+--------------- type aliases --------------------------
+
+type Work = (S.Set Err, S.Set State)
+
+--------------- injection -----------------------------
+
 baseState :: State
 baseState 
   = State { world    = World    ()
@@ -17,7 +23,16 @@ baseState
           , _env     = Env      { _code = error "Code is uninitialized!" }
           }
 
---------------- `instr` and `err` helpers --------------
+injectState :: Code -> State
+injectState c = baseState & (env . code) .~ c
+
+baseWork :: Work
+baseWork = (S.empty, error "Worklist is uninitialized!")
+
+injectWork :: State -> Work
+injectWork st = baseWork & _2 .~ (S.singleton st)
+
+--------------- relation helpers --------------
 
 incrPC :: State -> State
 incrPC st = addPC st 1
@@ -30,7 +45,7 @@ pop st =
   let (s0 : s') = st ^. machine . stack in
   (s0, st & (machine . stack) .~ s')
   
---------------- `instr` and `err` relations -----------
+--------------- `err`, `instr`, and `step` relations -----------
 
 err :: State -> Either Err State
 err st = Right st
@@ -235,37 +250,32 @@ instr st =
   where
     control = (st ^. env . code) ! (st ^. machine . pc)
 
---------------- `step` relation -----------------------
-
-step' :: State -> S.Set (Either Err State)
+step' :: State -> S.Set (Either Err State) -- TODO: use H from yellow paper to determine halt (right now cheating by returning
+                                           --       empty list in `instr`
 step' st = S.map err (instr st)
 
 step :: State -> (S.Set Err, S.Set State)
 step st = U.partitionEithers (step' st)
 
-eval' :: (S.Set Err, S.Set State) -> (S.Set Err, S.Set State)
-eval' curr =
-  let (errs, sts)   = curr
-      (errs', sts') = flattenPairs (S.map step sts)
+--------------- driver -----------------------
+
+oneWork :: Work -> Work
+oneWork w =
+  let (errs, sts)   = w
+      (errs', sts') = U.flattenPairs (S.map step sts)
   in
   (S.union errs errs', sts')
-  where
-    flattenPairs pairs   = S.foldl flattenPair (S.empty, S.empty) pairs -- TODO: Put in utility module
-    flattenPair acc curr = (S.union (fst acc) (fst curr), S.union (snd acc) (snd curr))
 
-iter :: (S.Set Err, S.Set State) -> (S.Set Err, S.Set State)
-iter curr =
-  let sts = snd curr in
+doWork :: Work -> Work
+doWork w =
+  let (_, sts) = w in
   if S.null sts then
-    curr
+    w
   else
-    iter (eval' curr)
+    doWork (oneWork w)
 
 eval :: State -> S.Set Err
-eval st = fst (iter (S.empty, S.singleton st))
-
-inject :: Code -> State
-inject c = baseState & (env . code) .~ c
+eval = fst . doWork . injectWork
 
 check :: Code -> S.Set Err
-check = eval . inject
+check = eval . injectState
