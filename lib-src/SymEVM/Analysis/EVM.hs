@@ -13,7 +13,7 @@ baseState
   = State { world    = World    ()
           , _machine = Machine  { _pc = 0, _stack = [] }
           , substate = Substate ()
-          , _env     = Env      { _code = listArray (1, 0) [] }
+          , _env     = Env      { _code = error "Code is uninitialized!" }
           }
 
 -- | Classifies states as either buggy (`Err`) or valid. If a state is valid, simply injects input state into `Right`.
