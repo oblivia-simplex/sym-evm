@@ -237,8 +237,14 @@ instr st =
       in
       S.singleton st''
     opcode | 0x80 <= opcode && opcode <= 0x8f -> -- DUP (TODO)
-      let st' = incrPC st in
-      S.singleton st'
+      let currStack = st ^. machine . stack
+
+          n         = fromIntegral (opcode - 0x80)
+          
+          st'       = incrPC st
+          st''      = push st' (currStack !! n)
+      in
+      S.singleton st''
     opcode | 0x90 <= opcode && opcode <= 0x9f -> -- SWAP (TODO)
       let st' = incrPC st in
       S.singleton st'
