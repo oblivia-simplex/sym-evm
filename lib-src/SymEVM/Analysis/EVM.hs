@@ -1,7 +1,11 @@
 module SymEVM.Analysis.EVM where
 
-import Data.Array
+import Data.Vector
 import Data.Either
+import Data.ByteString.Lazy
+import Data.Word
+import Data.Binary
+import Data.LargeWord
 import Control.Lens
 
 import SymEVM.Data
@@ -37,8 +41,11 @@ injectWork st = baseWork & _2 .~ (S.singleton st)
 incrPC :: State -> State
 incrPC st = addPC st 1
 
-addPC :: State -> Integer -> State
+addPC :: State -> Int -> State
 addPC st amt = st & (machine . pc) +~ amt
+
+push :: State -> Symbol -> State
+push st frame = st & (machine . stack) %~ ((:) frame)
 
 pop :: State -> (Symbol, State)
 pop st = 
@@ -56,7 +63,8 @@ instr :: State -> S.Set State
 instr st =
   case control of
     0x00 -> -- STOP
-      S.empty
+      let st' = incrPC st in
+      S.singleton st'
     0x01 -> -- ADD (TODO)
       let st' = incrPC st in
       S.singleton st'
@@ -217,16 +225,24 @@ instr st =
     0x5b -> -- JUMPDEST
       let st' = incrPC st in
       S.singleton st'
-    opcode | 0x60 <= opcode && opcode <= 0x7f -> -- PUSH
-      let st' = addPC st (toInteger (opcode - 0x60 + 2)) in
-      S.singleton st'
-    opcode | 0x80 <= opcode && opcode <= 0x8f -> -- DUP
+    opcode | 0x60 <= opcode && opcode <= 0x7f -> -- PUSH (TODO)
+      let currPC   = st ^. machine . pc
+          currCode = st ^. env . code
+
+          n        = fromIntegral (opcode - 0x60 + 1)
+          toPush   = decode . pad256 . pack . toList $ slice (currPC + 1) n currCode :: Word256
+
+          st'      = addPC st  (n + 1)
+          st''     = push  st' (CB256 toPush)
+      in
+      S.singleton st''
+    opcode | 0x80 <= opcode && opcode <= 0x8f -> -- DUP (TODO)
       let st' = incrPC st in
       S.singleton st'
-    opcode | 0x90 <= opcode && opcode <= 0x9f -> -- SWAP
+    opcode | 0x90 <= opcode && opcode <= 0x9f -> -- SWAP (TODO)
       let st' = incrPC st in
       S.singleton st'
-    opcode | 0xa0 <= opcode && opcode <= 0xa4 -> -- LOG
+    opcode | 0xa0 <= opcode && opcode <= 0xa4 -> -- LOG (TODO)
       let st' = incrPC st in
       S.singleton st'
     0xf0 -> -- CREATE (TODO)
@@ -279,3 +295,6 @@ eval = fst . doWork . injectWork
 
 check :: Code -> S.Set Err
 check = eval . injectState
+
+temp :: Code -> S.Set State
+temp = snd . oneWork . injectWork . injectState

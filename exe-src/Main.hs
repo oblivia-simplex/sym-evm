@@ -14,4 +14,5 @@ main = do
     let code = deserialize rawCode'
     case code of
       Nothing -> putStrLn "Error processing bytecode"
-      Just c  -> print (check c)
+      Just c  -> do print code
+                    print (temp c)

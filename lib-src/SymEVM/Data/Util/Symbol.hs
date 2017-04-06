@@ -1,10 +1,12 @@
 module SymEVM.Data.Util.Symbol where
 
+import Data.LargeWord
+
 data Symbol
-  = CB256 ()
+  = CB256 Word256
   | SB256 String
   | Plus Symbol Symbol
-  | Eq Symbol Symbol deriving ( Eq, Ord )
+  | Eq Symbol Symbol deriving ( Show, Eq, Ord )
 
 
 

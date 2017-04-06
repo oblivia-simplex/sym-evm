@@ -14,7 +14,7 @@ import SymEVM.Data.EVM.State.Machine.Stack
 data Machine = Machine
   { _pc    :: ProgCnt
   , _stack :: Stack
-  } deriving ( Eq, Ord )
+  } deriving ( Show, Eq, Ord )
 
 pc :: Lens' Machine ProgCnt
 pc = lens _pc (\machine newPc -> machine { _pc = newPc })

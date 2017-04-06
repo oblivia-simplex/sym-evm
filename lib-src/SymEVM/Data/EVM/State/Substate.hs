@@ -1,3 +1,3 @@
 module SymEVM.Data.EVM.State.Substate where
 
-newtype Substate = Substate () deriving ( Eq, Ord )
+newtype Substate = Substate () deriving ( Show, Eq, Ord )

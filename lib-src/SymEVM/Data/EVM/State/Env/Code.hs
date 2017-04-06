@@ -1,12 +1,12 @@
 module SymEVM.Data.EVM.State.Env.Code where
 
-import Data.Array
+import qualified Data.Vector as V
 import Data.Word
 
 import Text.Read
 import Data.List.Split
 
-type Code = Array Integer Word8
+type Code = V.Vector Word8
 
 deserialize :: String -> Maybe Code
 deserialize str =
@@ -14,7 +14,7 @@ deserialize str =
     do
       let strBytes = map ("0x" ++) $ chunksOf 2 str
       words <- (mapM readMaybe strBytes :: Maybe [Word8])
-      return (listArray (0, ((toInteger . length) words) - 1) words)
+      return (V.fromList words)
   else
     Nothing
   where

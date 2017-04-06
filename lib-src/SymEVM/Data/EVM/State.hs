@@ -20,7 +20,7 @@ data State = State
   , _machine  :: Machine
   , substate :: Substate
   , _env      :: Env
-  } deriving ( Eq, Ord )
+  } deriving ( Show, Eq, Ord )
 
 machine :: Lens' State Machine
 machine = lens _machine (\state newMachine -> state { _machine = newMachine })
