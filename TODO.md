@@ -14,6 +14,7 @@
   2. Rolling my own Set data structure was dumb, should just use Data.Set for now. Will probably need
      to change to provide heuristics (e.g. priority queue rather than set) but we can do that later. -- DONE
   3. Convert to use H halting function from yellow paper
+  4. Collect final states as well as errors
 
 ## EtherPot Instruction Counts
 
@@ -25,7 +26,7 @@
   BLOCKHASH 1
   SHA3 31
   PUSH8 5 -- X
-  STOP 2
+  STOP 2 -- X
   NUMBER 3
   CALLDATASIZE 1
   CALLVALUE 4
@@ -46,25 +47,25 @@
   LT 5
   DUP5 6 -- X
   SSTORE 8
-  JUMPDEST 82
+  JUMPDEST 82 -- X
   GT 7
-  SWAP6 1
+  SWAP6 1 -- X
   MSTORE 77
-  SWAP7 1
+  SWAP7 1 -- X
   DUP7 16 -- X
   JUMP 57
   ADD 130
-  SWAP5 1
-  SWAP2 44
+  SWAP5 1 -- X
+  SWAP2 44 -- X
   EQ 15
   AND 14
   DUP4 21 -- X
-  SWAP4 5
+  SWAP4 5 -- X
   DUP6 7 -- X
   DUP1 75 -- X
-  SWAP3 16
+  SWAP3 16 -- X
   DUP3 38 -- X
-  SWAP1 121
+  SWAP1 121 -- X
   DUP2 104 -- X
   DUP9 5 -- X
   SLOAD 25

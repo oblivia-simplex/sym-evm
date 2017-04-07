@@ -1,8 +1,8 @@
 module SymEVM.Analysis.EVM where
 
-import Data.Vector
+import qualified Data.Vector as V
 import Data.Either
-import Data.ByteString.Lazy
+import qualified Data.ByteString.Lazy as B
 import Data.Word
 import Data.Binary
 import Data.LargeWord
@@ -230,7 +230,7 @@ instr st =
           currCode = st ^. env . code
 
           n        = fromIntegral (opcode - 0x60 + 1)
-          toPush   = decode . pad256 . pack . toList $ slice (currPC + 1) n currCode :: Word256
+          toPush   = decode . pad256 . B.pack . V.toList $ V.slice (currPC + 1) n currCode :: Word256
 
           st'      = addPC st  (n + 1)
           st''     = push  st' (CB256 toPush)
@@ -239,15 +239,25 @@ instr st =
     opcode | 0x80 <= opcode && opcode <= 0x8f -> -- DUP (TODO)
       let currStack = st ^. machine . stack
 
-          n         = fromIntegral (opcode - 0x80)
+          n         = fromIntegral (opcode - 0x80 + 1)
           
           st'       = incrPC st
-          st''      = push st' (currStack !! n)
+          st''      = push st' (currStack !! (n - 1))
       in
       S.singleton st''
     opcode | 0x90 <= opcode && opcode <= 0x9f -> -- SWAP (TODO)
-      let st' = incrPC st in
-      S.singleton st'
+      let currStack = st ^. machine . stack
+
+          n         = fromIntegral (opcode - 0x90 + 1)
+          (l, r)    = splitAt n currStack
+          (s0 : l') = l
+          (sn : r') = r
+          stack'    = sn : (l' ++ (s0 : r'))
+
+          st'       = incrPC st
+          st''      = st' & (machine . stack) .~ stack'
+      in
+      S.singleton st''
     opcode | 0xa0 <= opcode && opcode <= 0xa4 -> -- LOG (TODO)
       let st' = incrPC st in
       S.singleton st'
@@ -270,7 +280,7 @@ instr st =
       let st' = incrPC st in
       S.singleton st'
   where
-    control = (st ^. env . code) ! (st ^. machine . pc)
+    control = (st ^. env . code) V.! (st ^. machine . pc)
 
 step :: State -> (S.Set Err, S.Set State)
 step st = (err st, instr st)
@@ -279,7 +289,7 @@ step st = (err st, instr st)
 
 halt :: State -> Bool
 halt st = 
-  let control = (st ^. env . code) ! (st ^. machine . pc) in
+  let control = (st ^. env . code) V.! (st ^. machine . pc) in
   case control of
     0x00 -> True -- STOP
     0xf3 -> True -- RETURN
