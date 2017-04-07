@@ -1,5 +1,7 @@
 # TODO
 
+  1. Convert to use H halting function from yellow paper
+
 # BACKBURNER
 
   1. Figure out right semantics... I don't like the types yet
