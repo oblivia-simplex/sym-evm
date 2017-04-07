@@ -1,6 +1,5 @@
 # TODO
 
-  1. Convert to use H halting function from yellow paper
 
 # BACKBURNER
 
@@ -14,6 +13,7 @@
   1. Refactor to use lenses? -- DONE
   2. Rolling my own Set data structure was dumb, should just use Data.Set for now. Will probably need
      to change to provide heuristics (e.g. priority queue rather than set) but we can do that later. -- DONE
+  3. Convert to use H halting function from yellow paper
 
 ## EtherPot Instruction Counts
 

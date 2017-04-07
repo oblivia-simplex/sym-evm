@@ -52,7 +52,15 @@ pop st =
   let (s0 : s') = st ^. machine . stack in
   (s0, st & (machine . stack) .~ s')
   
---------------- `err`, `instr`, and `step` relations -----------
+--------------- `halt`, `err`, `instr`, and `step` relations -----------
+halt :: State -> Bool
+halt st = 
+  let control = (st ^. env . code) ! (st ^. machine . pc) in
+  case control of
+    0x00 -> True -- STOP
+    0xf3 -> True -- RETURN
+    0xff -> True -- SUICIDE
+    _    -> False
 
 err :: State -> Either Err State
 err st = Right st
@@ -273,11 +281,15 @@ instr st =
     control = (st ^. env . code) ! (st ^. machine . pc)
 
 step' :: State -> S.Set (Either Err State) -- TODO: use H from yellow paper to determine halt (right now cheating by returning
-                                           --       empty list in `instr`
-step' st = S.map err (instr st)
+step' st = S.map err (instr st)            --       empty list in `instr`
 
 step :: State -> (S.Set Err, S.Set State)
-step st = U.partitionEithers (step' st)
+step st = 
+  let (l, r) = U.partitionEithers (step' st) in
+  if halt st then 
+    (l, S.empty)
+  else
+    (l, r)
 
 --------------- driver -----------------------
 
