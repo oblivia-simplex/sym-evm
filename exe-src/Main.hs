@@ -15,4 +15,4 @@ main = do
     case code of
       Nothing -> putStrLn "Error processing bytecode"
       Just c  -> do print code
-                    print (temp c)
+                    print (eval c)

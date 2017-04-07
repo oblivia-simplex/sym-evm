@@ -15,7 +15,7 @@ import qualified SymEVM.Data.Util.Set as S
 
 --------------- type aliases --------------------------
 
-type Work = (S.Set Err, S.Set State)
+type Result = (S.Set Err, S.Set State)
 
 --------------- injection -----------------------------
 
@@ -30,11 +30,11 @@ baseState
 injectState :: Code -> State
 injectState c = baseState & (env . code) .~ c
 
-baseWork :: Work
-baseWork = (S.empty, error "Worklist is uninitialized!")
+baseWork :: (S.Set State, Result)
+baseWork = (error "Worklist is uninitialized!", (S.empty, S.empty))
 
-injectWork :: State -> Work
-injectWork st = baseWork & _2 .~ (S.singleton st)
+injectWork :: State -> (S.Set State, Result)
+injectWork st = baseWork & _1 .~ (S.singleton st)
 
 --------------- relation helpers --------------
 
@@ -52,18 +52,10 @@ pop st =
   let (s0 : s') = st ^. machine . stack in
   (s0, st & (machine . stack) .~ s')
   
---------------- `halt`, `err`, `instr`, and `step` relations -----------
-halt :: State -> Bool
-halt st = 
-  let control = (st ^. env . code) ! (st ^. machine . pc) in
-  case control of
-    0x00 -> True -- STOP
-    0xf3 -> True -- RETURN
-    0xff -> True -- SUICIDE
-    _    -> False
+--------------- `err`, `instr`, and `step` relations -----------
 
-err :: State -> Either Err State
-err st = Right st
+err :: State -> S.Set Err
+err st = S.empty
 
 -- | Produces the set of all next possible states. For concrete states, result will always be a set of size 1 which contains
 --   the next state. For symbolic states, there could be many possible next states (e.g. multiple jump destinations).
@@ -280,39 +272,44 @@ instr st =
   where
     control = (st ^. env . code) ! (st ^. machine . pc)
 
-step' :: State -> S.Set (Either Err State) -- TODO: use H from yellow paper to determine halt (right now cheating by returning
-step' st = S.map err (instr st)            --       empty list in `instr`
-
 step :: State -> (S.Set Err, S.Set State)
-step st = 
-  let (l, r) = U.partitionEithers (step' st) in
-  if halt st then 
-    (l, S.empty)
-  else
-    (l, r)
+step st = (err st, instr st)
 
 --------------- driver -----------------------
 
-oneWork :: Work -> Work
-oneWork w =
-  let (errs, sts)   = w
-      (errs', sts') = U.flattenPairs (S.map step sts)
+halt :: State -> Bool
+halt st = 
+  let control = (st ^. env . code) ! (st ^. machine . pc) in
+  case control of
+    0x00 -> True -- STOP
+    0xf3 -> True -- RETURN
+    0xff -> True -- SUICIDE
+    _    -> False
+
+oneWork :: (S.Set State, Result) -> (S.Set State, Result)
+oneWork curr =
+  let (work, r)           = curr
+      (errs, finals)      = r
+      
+      (toStep, work_rem)  = S.deleteFindMin work -- Pull an element off the worklist
+      (errs', tmp)        = step toStep          -- Step according to relation
+      (finals', work_new) = S.partition halt tmp -- Separate halting (final) states from intermediate
   in
-  (S.union errs errs', sts')
+  (S.union work_rem work_new, (S.union errs errs', S.union finals finals'))
 
-doWork :: Work -> Work
-doWork w =
-  let (_, sts) = w in
-  if S.null sts then
-    w
+doWork :: (S.Set State, Result) -> Result
+doWork curr =
+  let (work, r) = curr in
+  if S.null work then
+    r
   else
-    doWork (oneWork w)
+    doWork (oneWork curr)
 
-eval :: State -> S.Set Err
-eval = fst . doWork . injectWork
+eval :: Code -> Result
+eval = doWork . injectWork . injectState
+
+run :: Code -> S.Set State
+run = snd . eval
 
 check :: Code -> S.Set Err
-check = eval . injectState
-
-temp :: Code -> S.Set State
-temp = snd . oneWork . injectWork . injectState
+check = fst . eval
