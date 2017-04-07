@@ -18,56 +18,28 @@
 
 ## EtherPot Instruction Counts
 
-  PUSH1 372 -- X
   MLOAD 32
-  PUSH2 104 -- X
   RETURN 12
-  PUSH4 13  -- X
   BLOCKHASH 1
   SHA3 31
-  PUSH8 5 -- X
-  STOP 2 -- X
-  NUMBER 3 -- X
   CALLDATASIZE 1
   CALLVALUE 4
-  DUP11 4 -- X
-  DUP10 2 -- X
   EXP 6
   ISZERO 17
   MUL 9
   DIV 11
   SUB 17
   CALLDATALOAD 17
-  PUSH20 10 -- X
   CALLER 4
-  PUSH29 1 -- X
-  POP 207
-  DUP8 2 -- X
   JUMPI 30
   LT 5
-  DUP5 6 -- X
   SSTORE 8
-  JUMPDEST 82 -- X
   GT 7
-  SWAP6 1 -- X
   MSTORE 77
-  SWAP7 1 -- X
-  DUP7 16 -- X
   JUMP 57
   ADD 130
-  SWAP5 1 -- X
-  SWAP2 44 -- X
   EQ 15
   AND 14
-  DUP4 21 -- X
-  SWAP4 5 -- X
-  DUP6 7 -- X
-  DUP1 75 -- X
-  SWAP3 16 -- X
-  DUP3 38 -- X
-  SWAP1 121 -- X
-  DUP2 104 -- X
-  DUP9 5 -- X
   SLOAD 25
   CALL 3
   NOT 2

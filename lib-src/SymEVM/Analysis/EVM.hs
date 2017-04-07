@@ -197,8 +197,10 @@ instr st =
       let st' = incrPC st in
       S.singleton st'
     0x50 -> -- POP (TODO)
-      let st' = incrPC st in
-      S.singleton st'
+      let st'       = incrPC st
+          (_, st'') = pop st'
+      in
+      S.singleton st''
     0x51 -> -- MLOAD (TODO)
       let st' = incrPC st in
       S.singleton st'
