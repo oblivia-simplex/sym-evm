@@ -21,11 +21,14 @@ type Result = (S.Set Err, S.Set State)
 
 baseState :: State
 baseState 
-  = State { world    = World    ()
-          , _machine = Machine  { _pc = 0, _stack = [] }
-          , substate = Substate ()
-          , _env     = Env      { _code = error "Code is uninitialized!" }
-          }
+  = State 
+      { world    = World    ()
+      , _machine = Machine  { _pc = 0, _stack = [] }
+      , substate = Substate ()
+      , _env     = Env      
+                     { _block = Block { _number = SB256 "number" }
+                     , _code  = error "Code is uninitialized!" }
+      }
 
 injectState :: Code -> State
 injectState c = baseState & (env . code) .~ c
@@ -183,8 +186,10 @@ instr st =
       let st' = incrPC st in
       S.singleton st'
     0x43 -> -- NUMBER (TODO)
-      let st' = incrPC st in
-      S.singleton st'
+      let st'  = incrPC st
+          st'' = push st' (st' ^. env . block . number)
+      in
+      S.singleton st''
     0x44 -> -- DIFFICULTY (TODO)
       let st' = incrPC st in
       S.singleton st'

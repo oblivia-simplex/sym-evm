@@ -37,6 +37,7 @@ library
                        SymEVM.Data.EVM.State.Substate
                        SymEVM.Data.EVM.State.Env
                        SymEVM.Data.EVM.State.Env.Code
+                       SymEVM.Data.EVM.State.Env.Block
                        SymEVM.Data.EVM.Err
                        SymEVM.Data.Util
                        SymEVM.Data.Util.Set
