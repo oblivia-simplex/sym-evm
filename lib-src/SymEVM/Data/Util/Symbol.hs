@@ -3,10 +3,20 @@ module SymEVM.Data.Util.Symbol where
 import Data.LargeWord
 
 data Symbol
-  = CB256 Word256
+  = STrue
+  | SAnd Symbol Symbol
+  | CB256 Word256
   | SB256 String
-  | Plus Symbol Symbol
-  | Eq Symbol Symbol deriving ( Show, Eq, Ord )
+  | SAdd Symbol Symbol
+  | SSub Symbol Symbol
+  | SMult Symbol Symbol
+  | SExp Symbol Symbol
+  | SIsZero Symbol
+  | SLT Symbol Symbol
+  | SGT Symbol Symbol
+  | SEQ Symbol Symbol
+  | SAND Symbol Symbol
+  | SEq Symbol Symbol deriving ( Show, Eq, Ord )
 
 
 

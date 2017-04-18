@@ -33,17 +33,7 @@
   SLOAD 25
   CALL 3
 
-  EXP 6
-  ISZERO 17
-  MUL 9
   DIV 11
-  SUB 17
-  LT 5
-  GT 7
-  ADD 130
-  EQ 15
-  AND 14
   NOT 2
   OR 2
   MOD 3
-
