@@ -3,22 +3,22 @@ module SymEVM.Data.Util.Symbol where
 import Data.LargeWord
 
 data Symbol
-  = STrue
-  | SAnd Symbol Symbol
-  | CB256 Word256
+  = CB256 Word256
   | SB256 String
-  | SAdd Symbol Symbol
-  | SSub Symbol Symbol
-  | SMult Symbol Symbol
-  | SExp Symbol Symbol
-  | SIsZero Symbol
-  | SLT Symbol Symbol
-  | SGT Symbol Symbol
+  | STrue
+  | SAnd Symbol Symbol
+  | SEq Symbol Symbol
+  | SADD Symbol Symbol
+  | SSUB Symbol Symbol
+  | SMUL Symbol Symbol
+  | SEXP Symbol Symbol
+  | SISZERO Symbol
+  | SymLT Symbol Symbol
+  | SymGT Symbol Symbol
   | SEQ Symbol Symbol
-  | SAND Symbol Symbol
-  | SEq Symbol Symbol deriving ( Show, Eq, Ord )
-
-
+  | SNOT Symbol
+  | SAND Symbol Symbol 
+  | SOR Symbol Symbol deriving ( Show, Eq, Ord )
 
 {- How do I get Eq instance for GADTs? Until I can figure this out, i'll use normal ADTs... 
 

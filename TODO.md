@@ -5,7 +5,7 @@
 
   1. Figure out right semantics... I don't like the types yet
     * In particular, i'd like semantics to be similar to the small-step error
-      semantics in DVH PL notes. Flat structure makes this difficult. -- 
+      semantics in DVH PL notes. Flat structure makes this difficult.
   2. Convert to monadic interpreter?
 
 # DONE
@@ -18,22 +18,23 @@
 
 ## EtherPot Instruction Counts
 
-  MLOAD 32
-  RETURN 12
-  BLOCKHASH 1
   SHA3 31
+
   CALLDATASIZE 1
-  CALLVALUE 4
   CALLDATALOAD 17
-  CALLER 4
-  JUMPI 30
+
   SSTORE 8
-  MSTORE 77
-  JUMP 57
   SLOAD 25
+
+  MSTORE 77
+  MLOAD 32
+
+  JUMP 57
+  JUMPI 30
+
+  RETURN 12
   CALL 3
 
+  BLOCKHASH 1
   DIV 11
-  NOT 2
-  OR 2
   MOD 3

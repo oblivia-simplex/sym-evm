@@ -1,6 +1,7 @@
 module SymEVM.Analysis.EVM where
 
 import qualified Data.Vector as V
+import qualified Data.Map as M
 import Data.Either
 import qualified Data.ByteString.Lazy as B
 import Data.Word
@@ -13,6 +14,7 @@ import SymEVM.Data
 import SymEVM.Analysis.Util as U
 
 import qualified SymEVM.Data.Util.Set as S
+import SymEVM.Data.Util.Instr
 
 --------------- type aliases --------------------------
 
@@ -27,8 +29,10 @@ baseState
       , _machine = Machine  { _pc = 0, _stack = [] }
       , substate = Substate ()
       , _env     = Env      
-                     { _block = Block { _number = SB256 "number" }
-                     , _code  = error "Code is uninitialized!" }
+                     { _sender = SB256 "sender"
+                     , _value  = SB256 "value"
+                     , _code   = error "Code is uninitialized!"
+                     , _block  = Block { _number = SB256 "number" } }
       , _cond    = STrue
       }
 
@@ -42,6 +46,16 @@ injectWork :: State -> (S.Set State, Result)
 injectWork st = baseWork & _1 .~ (S.singleton st)
 
 --------------- relation helpers --------------
+
+currentInstr :: State -> Word8
+currentInstr st =
+  let st_pc   = (st ^. machine . pc) in
+  let st_code = (st ^. env . code)   in
+
+  if st_pc < V.length st_code then
+    st_code V.! st_pc
+  else
+    0x00
 
 incrPC :: State -> State
 incrPC st = addPC st 1
@@ -65,11 +79,58 @@ fresh =
   do
     x <- gen
     return $ SB256 ("x" ++ (show x))
+
+find :: Ord k => k -> M.Map k a -> a
+find k m =
+  let Just ret = M.lookup k m in
+  ret
+
+-- TODO
+oog :: State -> Bool
+oog st = False
+
+invalid_instr :: State -> Bool
+invalid_instr st =
+  let w = currentInstr st in
+  case M.lookup w instrMeta of
+    Nothing -> True
+    Just _  -> False
+
+stack_underflow :: State -> Bool
+stack_underflow st =
+  let w = currentInstr st in
+  let w' = find w instrMeta in
+  let d = w' ^. delta in
+  let stack_size = length $ st ^. machine . stack in
+  stack_size < d
+
+-- TODO
+invalid_jump :: State -> Bool
+invalid_jump st = False
+
+stack_overflow :: State -> Bool
+stack_overflow st =
+  let w  = currentInstr st  in
+  let w' = find w instrMeta in
+  let d = w' ^. delta in
+  let a = w' ^. alpha in
+  let stack_size = length $ st ^. machine . stack in
+  stack_size - d + a > 1024
   
 --------------- `err`, `instr`, and `step` relations -----------
 
 err :: State -> S.Set Err
-err st = S.empty
+err st = 
+  if 
+    oog             st ||
+    invalid_instr   st ||
+    stack_underflow st ||
+    invalid_jump    st ||
+    stack_overflow  st
+  then
+    S.singleton (Err st)
+  else
+    S.empty
 
 -- | Produces the set of all next possible states. For concrete states, result will always be a set of size 1 which contains
 --   the next state. For symbolic states, there could be many possible next states (e.g. multiple jump destinations).
@@ -86,7 +147,7 @@ instr st =
         let (s1, st'') = pop st'
         fresh_sym     <- fresh
         let st_fresh  = push st'' fresh_sym
-        let st_final  = updateCond st_fresh (SEq fresh_sym (SAdd s0 s1))
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SADD s0 s1))
         return $ S.singleton st_final
     0x02 -> -- MUL (TODO)
       do 
@@ -95,16 +156,16 @@ instr st =
         let (s1, st'') = pop st'
         fresh_sym     <- fresh
         let st_fresh  = push st'' fresh_sym
-        let st_final  = updateCond st_fresh (SEq fresh_sym (SMult s0 s1))
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SMUL s0 s1))
         return $ S.singleton st_final
-    0x03 -> -- SUB (TODO
+    0x03 -> -- SUB (TODO)
       do 
         let st_incr    = incrPC st
         let (s0, st')  = pop st_incr
         let (s1, st'') = pop st'
         fresh_sym     <- fresh
         let st_fresh  = push st'' fresh_sym
-        let st_final  = updateCond st_fresh (SEq fresh_sym (SSub s0 s1))
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SSUB s0 s1))
         return $ S.singleton st_final
     0x04 -> -- DIV (TODO)
       let st' = incrPC st in
@@ -131,7 +192,7 @@ instr st =
         let (s1, st'') = pop st'
         fresh_sym     <- fresh
         let st_fresh  = push st'' fresh_sym
-        let st_final  = updateCond st_fresh (SEq fresh_sym (SExp s0 s1))
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SEXP s0 s1))
         return $ S.singleton st_final
     0x0b -> -- SIGNEXTEND (TODO)
       let st' = incrPC st in
@@ -143,7 +204,7 @@ instr st =
         let (s1, st'') = pop st'
         fresh_sym     <- fresh
         let st_fresh  = push st'' fresh_sym
-        let st_final  = updateCond st_fresh (SEq fresh_sym (SLT s0 s1))
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SymLT s0 s1))
         return $ S.singleton st_final
     0x11 -> -- GT (TODO)
       do 
@@ -152,7 +213,7 @@ instr st =
         let (s1, st'') = pop st'
         fresh_sym     <- fresh
         let st_fresh  = push st'' fresh_sym
-        let st_final  = updateCond st_fresh (SEq fresh_sym (SGT s0 s1))
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SymGT s0 s1))
         return $ S.singleton st_final
     0x12 -> -- SLT (TODO)
       let st' = incrPC st in
@@ -175,7 +236,7 @@ instr st =
         let (s0, st') = pop st_incr
         fresh_sym    <- fresh
         let st_fresh  = push st' fresh_sym
-        let st_final  = updateCond st_fresh (SEq fresh_sym (SIsZero s0))
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SISZERO s0))
         return $ S.singleton st_final
     0x16 -> -- AND (TODO)
       do 
@@ -187,14 +248,25 @@ instr st =
         let st_final  = updateCond st_fresh (SEq fresh_sym (SAND s0 s1))
         return $ S.singleton st_final
     0x17 -> -- OR (TODO)
-      let st' = incrPC st in
-      return $ S.singleton st'
+      do 
+        let st_incr    = incrPC st
+        let (s0, st')  = pop st_incr
+        let (s1, st'') = pop st'
+        fresh_sym     <- fresh
+        let st_fresh  = push st'' fresh_sym
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SOR s0 s1))
+        return $ S.singleton st_final
     0x18 -> -- XOR (TODO)
       let st' = incrPC st in
       return $ S.singleton st'
     0x19 -> -- NOT (TODO)
-      let st' = incrPC st in
-      return $ S.singleton st'
+      do
+        let st_incr   = incrPC st
+        let (s0, st') = pop st_incr
+        fresh_sym    <- fresh
+        let st_fresh  = push st' fresh_sym
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SNOT s0))
+        return $ S.singleton st_final
     0x1a -> -- BYTE (TODO)
       let st' = incrPC st in
       return $ S.singleton st'
@@ -211,11 +283,15 @@ instr st =
       let st' = incrPC st in
       return $ S.singleton st'
     0x33 -> -- CALLER (TODO)
-      let st' = incrPC st in
-      return $ S.singleton st'
+      let st'  = incrPC st
+          st'' = push st' (st' ^. env . sender)
+      in
+      return $ S.singleton st''
     0x34 -> -- CALLVALUE (TODO)
-      let st' = incrPC st in
-      return $ S.singleton st'
+      let st'  = incrPC st
+          st'' = push st' (st' ^. env . value)
+      in
+      return $ S.singleton st''
     0x35 -> -- CALLDATALOAD (TODO)
       let st' = incrPC st in
       return $ S.singleton st'
@@ -355,9 +431,13 @@ instr st =
 
 step :: State -> Gen Integer (S.Set Err, S.Set State)
 step st = 
-  do
-    instr_st <- instr st
-    return (err st, instr_st)
+  let errs = err st in
+  if null errs then
+    do
+      instr_st <- instr st
+      return (errs, instr_st)
+  else
+    return (errs, S.empty)
 
 --------------- driver -----------------------
 

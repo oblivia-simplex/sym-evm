@@ -42,6 +42,7 @@ library
                        SymEVM.Data.Util
                        SymEVM.Data.Util.Set
                        SymEVM.Data.Util.Symbol
+                       SymEVM.Data.Util.Instr
   -- other-modules:       
   build-depends:       base >= 4.8 && < 4.9,
                        vector,

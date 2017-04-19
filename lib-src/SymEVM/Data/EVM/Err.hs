@@ -1,3 +1,5 @@
 module SymEVM.Data.EVM.Err where
 
-newtype Err = Err () deriving ( Eq, Ord, Show )
+import SymEVM.Data.EVM.State
+
+newtype Err = Err State deriving ( Eq, Ord, Show )
