@@ -27,9 +27,6 @@ pad256 b =
     let diff  = 32 - len
         zeros = B.replicate diff 0x00 
     in
-    
     B.append zeros b
-
-    
   else
     b

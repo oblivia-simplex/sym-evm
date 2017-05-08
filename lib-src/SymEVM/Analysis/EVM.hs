@@ -9,6 +9,7 @@ import Data.Binary
 import Data.LargeWord
 import Control.Lens
 import Control.Monad.Gen
+import System.IO.Unsafe
 
 import SymEVM.Data
 import SymEVM.Analysis.Util as U
@@ -16,9 +17,131 @@ import SymEVM.Analysis.Util as U
 import qualified SymEVM.Data.Util.Set as S
 import SymEVM.Data.Util.Instr
 
+import qualified Z3.Monad as Z
+
 --------------- type aliases --------------------------
 
 type Result = (S.Set Err, S.Set State)
+
+--------------- Z3 ------------------------------------
+
+blockhashDecl :: Z.Z3 Z.FuncDecl
+blockhashDecl = 
+  do
+    sort   <- Z.mkBvSort 256
+    symbol <- Z.mkStringSymbol "blockhash"
+    Z.mkFuncDecl symbol [sort] sort
+
+symToZ3 :: Symbol -> Z.Z3 Z.AST
+symToZ3 (CB256 word) =
+  do
+    word_z3 <- Z.mkIntNum word
+    Z.mkInt2bv 256 word_z3
+symToZ3 (SB256 name) = 
+  do 
+    sort   <- Z.mkBvSort 256
+    symbol <- Z.mkStringSymbol name
+    Z.mkConst symbol sort
+symToZ3 (STrue)      = Z.mkTrue
+symToZ3 (SAnd s1 s2) = 
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    Z.mkAnd [s1_z3, s2_z3]
+symToZ3 (SLt s1 s2)  =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    Z.mkBvult s1_z3 s2_z3
+symToZ3 (SNot s)     =
+  do
+    s_z3 <- symToZ3 s
+    Z.mkNot s_z3
+symToZ3 (SEq s1 s2)  =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    Z.mkEq s1_z3 s2_z3
+symToZ3 (SADD s1 s2) =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    Z.mkBvadd s1_z3 s2_z3
+symToZ3 (SSUB s1 s2) =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    Z.mkBvsub s1_z3 s2_z3
+symToZ3 (SMUL s1 s2) =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    Z.mkBvmul s1_z3 s2_z3
+symToZ3 (SEXP s1 s2) =
+  do
+    sort   <- Z.mkBvSort 256
+    Z.mkFreshConst "exp" sort
+symToZ3 (SISZERO s)  =
+  do
+    s_z3  <- symToZ3 s
+    bv_0  <- Z.mkBitvector 256 0
+    bv_1  <- Z.mkBitvector 256 1
+    guard <- Z.mkEq s_z3 bv_0
+    Z.mkIte guard bv_1 bv_0
+symToZ3 (SymLT s1 s2) =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    bv_0  <- Z.mkBitvector 256 0
+    bv_1  <- Z.mkBitvector 256 1
+    guard <- Z.mkBvult s1_z3 s2_z3
+    Z.mkIte guard bv_1 bv_0
+symToZ3 (SymGT s1 s2) =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    bv_0  <- Z.mkBitvector 256 0
+    bv_1  <- Z.mkBitvector 256 1
+    guard <- Z.mkBvugt s1_z3 s2_z3
+    Z.mkIte guard bv_1 bv_0
+symToZ3 (SEQ s1 s2) =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    bv_0  <- Z.mkBitvector 256 0
+    bv_1  <- Z.mkBitvector 256 1
+    guard <- Z.mkEq s1_z3 s2_z3
+    Z.mkIte guard bv_1 bv_0
+symToZ3 (SNOT s) =
+  do
+    s_z3 <- symToZ3 s
+    Z.mkBvnot s_z3
+symToZ3 (SAND s1 s2) =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    Z.mkBvand s1_z3 s2_z3
+symToZ3 (SOR s1 s2) =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    Z.mkBvor s1_z3 s2_z3
+symToZ3 (SBLOCKHASH s) =
+  do 
+    s_z3      <- symToZ3 s
+    blockhash <- blockhashDecl
+    Z.mkApp blockhash [s_z3]
+
+isSat :: State -> Symbol -> Maybe String
+isSat st property = unsafePerformIO . Z.evalZ3 $
+  do
+    z3_of_check <- symToZ3 (SAnd (st ^. cond) property)
+    Z.assert z3_of_check
+    (res, mmodel) <- Z.getModel
+    case res of
+      Z.Sat   -> traverse Z.showModel mmodel
+      Z.Unsat -> return Nothing
+      Z.Undef -> return Nothing
 
 --------------- injection -----------------------------
 
@@ -121,6 +244,20 @@ stack_overflow st =
 
 err :: State -> S.Set Err
 err st = 
+  case control of
+    0x40 -> 
+      let curr_block = st ^. env . block . number in
+      let (s0 : _) = (st ^. machine . stack) in
+      let diff = SSUB curr_block s0 in
+      let final = SNot (SLt diff (CB256 256)) in
+      case (isSat st final) of
+              Nothing -> S.empty
+              Just s  -> S.singleton (Err st s)
+    _    -> S.empty
+  where
+    control = (st ^. env . code) V.! (st ^. machine . pc)
+
+{--
   if 
     oog             st ||
     invalid_instr   st ||
@@ -131,6 +268,7 @@ err st =
     S.singleton (Err st)
   else
     S.empty
+--}
 
 -- | Produces the set of all next possible states. For concrete states, result will always be a set of size 1 which contains
 --   the next state. For symbolic states, there could be many possible next states (e.g. multiple jump destinations).
@@ -317,8 +455,13 @@ instr st =
       let st' = incrPC st in
       return $ S.singleton st'
     0x40 -> -- BLOCKHASH (TODO)
-      let st' = incrPC st in
-      return $ S.singleton st'
+      do 
+        let st_incr    = incrPC st
+        let (s0, st')  = pop st_incr
+        fresh_sym     <- fresh
+        let st_fresh  = push st' fresh_sym
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SBLOCKHASH s0))
+        return $ S.singleton st_final
     0x41 -> -- COINBASE (TODO)
       let st' = incrPC st in
       return $ S.singleton st'
@@ -432,12 +575,9 @@ instr st =
 step :: State -> Gen Integer (S.Set Err, S.Set State)
 step st = 
   let errs = err st in
-  if null errs then
-    do
-      instr_st <- instr st
-      return (errs, instr_st)
-  else
-    return (errs, S.empty)
+  do
+    instr_st <- instr st
+    return (errs, instr_st)
 
 --------------- driver -----------------------
 

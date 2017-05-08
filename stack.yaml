@@ -4,4 +4,5 @@ packages:
 - '.'
 extra-deps:
 - monad-gen-0.3.0.1
+- z3-4.1.0
 resolver: lts-6.30

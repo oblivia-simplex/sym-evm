@@ -7,6 +7,8 @@ data Symbol
   | SB256 String
   | STrue
   | SAnd Symbol Symbol
+  | SLt Symbol Symbol
+  | SNot Symbol
   | SEq Symbol Symbol
   | SADD Symbol Symbol
   | SSUB Symbol Symbol
@@ -18,7 +20,8 @@ data Symbol
   | SEQ Symbol Symbol
   | SNOT Symbol
   | SAND Symbol Symbol 
-  | SOR Symbol Symbol deriving ( Show, Eq, Ord )
+  | SOR Symbol Symbol 
+  | SBLOCKHASH Symbol deriving ( Show, Eq, Ord )
 
 {- How do I get Eq instance for GADTs? Until I can figure this out, i'll use normal ADTs... 
 
