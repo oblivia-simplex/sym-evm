@@ -12,6 +12,8 @@ data Symbol
   | SEq Symbol Symbol
   | SADD Symbol Symbol
   | SSUB Symbol Symbol
+  | SDIV Symbol Symbol
+  | SMOD Symbol Symbol
   | SMUL Symbol Symbol
   | SEXP Symbol Symbol
   | SISZERO Symbol
@@ -19,6 +21,7 @@ data Symbol
   | SymGT Symbol Symbol
   | SEQ Symbol Symbol
   | SNOT Symbol
+  | SSHA3 Symbol Symbol
   | SAND Symbol Symbol 
   | SOR Symbol Symbol 
   | SBLOCKHASH Symbol deriving ( Show, Eq, Ord )

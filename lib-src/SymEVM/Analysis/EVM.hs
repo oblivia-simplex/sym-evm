@@ -15,7 +15,6 @@ import SymEVM.Data
 import SymEVM.Analysis.Util as U
 
 import qualified SymEVM.Data.Util.Set as S
-import SymEVM.Data.Util.Instr
 
 import qualified Z3.Monad as Z
 
@@ -31,6 +30,14 @@ blockhashDecl =
     sort   <- Z.mkBvSort 256
     symbol <- Z.mkStringSymbol "blockhash"
     Z.mkFuncDecl symbol [sort] sort
+
+sha3Decl :: Z.Z3 Z.FuncDecl
+sha3Decl =
+  do
+    sort   <- Z.mkBvSort 256
+    symbol <- Z.mkStringSymbol "sha3"
+    Z.mkFuncDecl symbol [sort, sort] sort
+
 
 symToZ3 :: Symbol -> Z.Z3 Z.AST
 symToZ3 (CB256 word) =
@@ -72,6 +79,16 @@ symToZ3 (SSUB s1 s2) =
     s1_z3 <- symToZ3 s1
     s2_z3 <- symToZ3 s2
     Z.mkBvsub s1_z3 s2_z3
+symToZ3 (SDIV s1 s2) =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    Z.mkBvudiv s1_z3 s2_z3
+symToZ3 (SMOD s1 s2) =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    Z.mkBvurem s1_z3 s2_z3
 symToZ3 (SMUL s1 s2) =
   do
     s1_z3 <- symToZ3 s1
@@ -116,6 +133,12 @@ symToZ3 (SNOT s) =
   do
     s_z3 <- symToZ3 s
     Z.mkBvnot s_z3
+symToZ3 (SSHA3 s1 s2) =
+  do
+    s1_z3 <- symToZ3 s1
+    s2_z3 <- symToZ3 s2
+    sha3  <- sha3Decl
+    Z.mkApp sha3 [s1_z3, s2_z3]
 symToZ3 (SAND s1 s2) =
   do
     s1_z3 <- symToZ3 s1
@@ -209,6 +232,7 @@ find k m =
   ret
 
 -- TODO
+{--
 oog :: State -> Bool
 oog st = False
 
@@ -240,6 +264,7 @@ stack_overflow st =
   let stack_size = length $ st ^. machine . stack in
   stack_size - d + a > 1024
   
+--}
 --------------- `err`, `instr`, and `step` relations -----------
 
 err :: State -> S.Set Err
@@ -306,14 +331,26 @@ instr st =
         let st_final  = updateCond st_fresh (SEq fresh_sym (SSUB s0 s1))
         return $ S.singleton st_final
     0x04 -> -- DIV (TODO)
-      let st' = incrPC st in
-      return $ S.singleton st'
+      do
+        let st_incr    = incrPC st
+        let (s0, st')  = pop st_incr
+        let (s1, st'') = pop st'
+        fresh_sym     <- fresh
+        let st_fresh  = push st'' fresh_sym
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SDIV s0 s1))
+        return $ S.singleton st_final
     0x05 -> -- SDIV (TODO)
       let st' = incrPC st in
       return $ S.singleton st'
     0x06 -> -- MOD (TODO)
-      let st' = incrPC st in
-      return $ S.singleton st'
+      do
+        let st_incr    = incrPC st
+        let (s0, st')  = pop st_incr
+        let (s1, st'') = pop st'
+        fresh_sym     <- fresh
+        let st_fresh  = push st'' fresh_sym
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SMOD s0 s1))
+        return $ S.singleton st_final
     0x07 -> -- SMOD (TODO)
       let st' = incrPC st in
       return $ S.singleton st'
@@ -409,8 +446,14 @@ instr st =
       let st' = incrPC st in
       return $ S.singleton st'
     0x20 -> -- SHA3 (TODO)
-      let st' = incrPC st in
-      return $ S.singleton st'
+      do 
+        let st_incr    = incrPC st
+        let (s0, st')  = pop st_incr
+        let (s1, st'') = pop st'
+        fresh_sym     <- fresh
+        let st_fresh  = push st'' fresh_sym
+        let st_final  = updateCond st_fresh (SEq fresh_sym (SSHA3 s0 s1))
+        return $ S.singleton st_final
     0x30 -> -- ADDRESS (TODO
       let st' = incrPC st in
       return $ S.singleton st'

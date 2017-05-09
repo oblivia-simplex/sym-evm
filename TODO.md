@@ -18,8 +18,6 @@
 
 ## EtherPot Instruction Counts
 
-  SHA3 31
-
   CALLDATASIZE 1
   CALLDATALOAD 17
 
@@ -34,7 +32,3 @@
 
   RETURN 12
   CALL 3
-
-  BLOCKHASH 1
-  DIV 11
-  MOD 3
