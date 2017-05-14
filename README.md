@@ -11,14 +11,6 @@ This project provides only a symbolic implementation of the Ethereum Virtual Mac
 are represented purely symbolically, for now. The user can provide EVM bytecode instructions which will be symbolically
 executed, and possible errors will be reported with models for the environment and input which would yield those errors.
 
-<!--- TODO: Include a list of bugs that we find -->
-
-This project provides a stripped-down Ethereum client, which implements the EVM symbolically. 
-The application is not connected to the Ethereum network. Instead, the user can take a 
-[snapshot of the blockchain](https://github.com/ethereum/wiki/wiki/Blockchain-import-and-export-instructions) and seed this client 
-using that snapshot. The user then provides a transaction(s) as input. The client will simulate mining those 
-transactions into a block, and report any errors it discovers along the way.
-
 ## Usage
 
 Once you have it compiled and running, you can use -h or --help to print the usage instructions for the tool.
